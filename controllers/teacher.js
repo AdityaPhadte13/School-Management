@@ -1,7 +1,18 @@
 exports.getTeacherLogin = (req, res) => {
-  res.send("<h1>Teacher Login Page</h1>");
+  res.render("login", {
+    pageTitle: "Login - Teacher",
+    path: "/teacher/login"
+  });
+};
+
+exports.postTeacherLogin = (req, res) => {
+  console.log(req.body);
+  res.redirect("/teacher/home");
 };
 
 exports.getTeacherHome = (req, res) => {
-  res.send("<h1>Teacher Home Page</h1>");
+  res.render("teacher/home", {
+    pageTitle: "Teacher",
+    path: "/teacher/"
+  });
 };

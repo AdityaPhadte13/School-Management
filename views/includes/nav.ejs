@@ -34,7 +34,7 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li
-          class="nav-item nav-inline dropdown mr-auto <%= path === '/login' ? 'active' : '' %>"
+          class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>"
         >
           <a
             class="nav-inline nav-link dropdown-toggle"
@@ -50,7 +50,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Admin</a>
             <a class="dropdown-item" href="#">Student</a>
-            <a class="dropdown-item" href="#">Teacher</a>
+            <a class="dropdown-item" href="/teacher/login">Teacher</a>
           </div>
         </li>
       </ul>

@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get("/login", adminController.getAdminLogin);
 
-router.get("/", adminController.getAdminHome);
+router.get(["/", "/home"], adminController.getAdminHome);
 
 module.exports = router;

@@ -3,5 +3,8 @@ exports.getStudentLogin = (req, res) => {
 };
 
 exports.getStudentHome = (req, res) => {
-  res.send("<h1>Student Home Page</h1>");
+  res.render("student/home", {
+    pageTitle: "Student",
+    path: "/student/"
+  });
 };
