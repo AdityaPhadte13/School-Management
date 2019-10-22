@@ -1,13 +1,11 @@
-const express = require('express');
+const express = require("express");
+
+const teacherController = require("../controllers/teacher");
 
 const router = express.Router();
 
-router.get('/login', (req, res) => {
-	res.send("<h1>Teacher Login Page</h1>");
-})
+router.get("/login", teacherController.getTeacherLogin);
 
-router.get('/', (req, res) => {
-	res.send("<h1>Teacher Home Page</h1>");
-})
+router.get("/", teacherController.getTeacherHome);
 
-module.exports = router
+module.exports = router;
