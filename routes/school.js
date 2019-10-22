@@ -5,15 +5,15 @@ const express = require('express');
 const router = express.Router();
 
 router.get(['/', '/home'], (req, res) => {
-    res.sendFile(path.join(rootPath, 'views', 'index.html'));
+    res.render('index',{ title: "Home" });
 })
 
 router.get('/about', (req, res) => {
-    res.sendFile(path.join(rootPath, 'views', 'about.html'));
+    res.render('about',{ title: "About" });
 })
 
 router.get('/contact', (req, res) => {
-    res.sendFile(path.join(rootPath, 'views', 'contact.html'));
+    res.render('contact',{ title: "Contact Us" });
 })
 
-module.exports = router
+module.exports = router;
