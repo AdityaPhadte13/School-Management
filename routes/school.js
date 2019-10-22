@@ -5,15 +5,24 @@ const express = require('express');
 const router = express.Router();
 
 router.get(['/', '/home'], (req, res) => {
-    res.render('index',{ title: "Home" });
+    res.render('index',{ 
+        pageTitle: "Home",
+        path: '/home'
+     });
 })
 
 router.get('/about', (req, res) => {
-    res.render('about',{ title: "About" });
+    res.render('about',{ 
+        pageTitle: "About",
+        path: '/about' 
+    });
 })
 
 router.get('/contact', (req, res) => {
-    res.render('contact',{ title: "Contact Us" });
+    res.render('contact',{ 
+        pageTitle: "Contact Us",
+        path: '/contact'
+     });
 })
 
 module.exports = router;
