@@ -1,5 +1,13 @@
 exports.getAdminLogin = (req, res) => {
-  res.send("<h1>Admin Login Page</h1>");
+  res.render("login", {
+    pageTitle: "Admin Login",
+    path: "/admin/login"
+  });
+};
+
+exports.postAdminLogin = (req, res) => {
+  console.log(req.body);
+  res.redirect("/admin/home");
 };
 
 exports.getAdminHome = (req, res) => {

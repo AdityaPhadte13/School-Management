@@ -1,6 +1,6 @@
 exports.getTeacherLogin = (req, res) => {
   res.render("login", {
-    pageTitle: "Login - Teacher",
+    pageTitle: "Teacher Login",
     path: "/teacher/login"
   });
 };
