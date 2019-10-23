@@ -1,33 +1,59 @@
 <header>
-    <h1>School Management System</h1>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <h1 class="text-center bg-light" style="margin: 0em; padding: 3px;">
+    School Management System
+  </h1>
+  <nav
+    class="navbar navbar-expand-lg navbar-light"
+    style="background-color: #e3f2fd;"
+  >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact">Contact</a>
-                </li>
-                <li class="nav-item dropdown mr-auto">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        login As
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Admin</a>
-                        <a class="dropdown-item" href="#">Student</a>
-                        <a class="dropdown-item" href="#">Teacher</a>
-                    </div>
-                </li>
-        </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item <%= path === '/home' ? 'active' : '' %>">
+          <a class="nav-link" href="/home"
+            >Home <span class="sr-only">(current)</span></a
+          >
+        </li>
+        <li class="nav-item <%= path === '/about' ? 'active' : '' %>">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item <%= path === '/contact' ? 'active' : '' %>">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li
+          class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>"
+        >
+          <a
+            class="nav-inline nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            login As
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Admin</a>
+            <a class="dropdown-item" href="#">Student</a>
+            <a class="dropdown-item" href="/teacher/login">Teacher</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>

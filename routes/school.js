@@ -1,19 +1,14 @@
-const rootPath = require('../util/path')
-const path = require('path');
-const express = require('express');
+const rootPath = require("../util/path");
+const path = require("path");
+const express = require("express");
+const schoolController = require("../controllers/school");
 
 const router = express.Router();
 
-router.get(['/', '/home'], (req, res) => {
-    res.render('index',{ title: "Home" });
-})
+router.get(["/", "/home"], schoolController.getHome);
 
-router.get('/about', (req, res) => {
-    res.render('about',{ title: "About" });
-})
+router.get("/about", schoolController.getAbout);
 
-router.get('/contact', (req, res) => {
-    res.render('contact',{ title: "Contact Us" });
-})
+router.get("/contact", schoolController.getContact);
 
 module.exports = router;
