@@ -30,6 +30,18 @@
           (path.includes('student')) ? '/student/contact'
           : '/contact' %>">Contact</a>
         </li>
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="">student</a>
+        </li>
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="">teacher</a>
+        </li>
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="">academic</a>
+        </li>
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="">library</a>
+        </li>
         <!--  -->
       </ul>
       <ul class="navbar-nav ml-auto">
@@ -42,6 +54,15 @@
             <a class="dropdown-item" href="/admin/login">Admin</a>
             <a class="dropdown-item" href="/student/login">Student</a>
             <a class="dropdown-item" href="/teacher/login">Teacher</a>
+          </div>
+        </li>
+        <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/myprofile') ? 'active' : '' %>">
+          <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            my profile
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">signout</a>
           </div>
         </li>
       </ul>
