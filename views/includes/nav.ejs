@@ -2,49 +2,40 @@
   <h1 class="text-center bg-light" style="margin: 0em; padding: 3px;">
     School Management System
   </h1>
-  <nav
-    class="navbar navbar-expand-lg navbar-light"
-    style="background-color: #e3f2fd;"
-  >
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item <%= path === '/home' ? 'active' : '' %>">
-          <a class="nav-link" href="/home"
-            >Home <span class="sr-only">(current)</span></a
-          >
+        <li class="nav-item <%= path.includes('/home') ? 'active' : '' %>">
+          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/home' : 
+          (path.includes('admin')) ? '/admin/home' : 
+          (path.includes('student')) ? '/student/home'
+          : '/home' %>">
+            Home <span class="sr-only">(current)</span>
+          </a>
         </li>
-        <li class="nav-item <%= path === '/about' ? 'active' : '' %>">
-          <a class="nav-link" href="/about">About</a>
+        <li class="nav-item <%= path.includes('/about') ? 'active' : '' %>">
+          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/about' : 
+          (path.includes('admin')) ? '/admin/about' : 
+          (path.includes('student')) ? '/student/about'
+          : '/about' %>">About</a>
         </li>
-        <li class="nav-item <%= path === '/contact' ? 'active' : '' %>">
-          <a class="nav-link" href="/contact">Contact</a>
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/contact' : 
+          (path.includes('admin')) ? '/admin/contact' : 
+          (path.includes('student')) ? '/student/contact'
+          : '/contact' %>">Contact</a>
         </li>
+        <!--  -->
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li
-          class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>"
-        >
-          <a
-            class="nav-inline nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdown"
-            role="button"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
+        <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>">
+          <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             login As
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">

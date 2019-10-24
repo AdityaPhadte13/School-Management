@@ -8,13 +8,13 @@ exports.getHome = (req, res) => {
 exports.getAbout = (req, res) => {
   res.render("about", {
     pageTitle: "About",
-    path: "/about"
+    path: req.url
   });
 };
 
 exports.getContact = (req, res) => {
   res.render("contact", {
     pageTitle: "Contact Us",
-    path: "/contact"
+    path: req.url
   });
 };

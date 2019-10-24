@@ -13,6 +13,6 @@ exports.postAdminLogin = (req, res) => {
 exports.getAdminHome = (req, res) => {
   res.render("admin/home", {
     pageTitle: "Admin",
-    path: "/admin/"
+    path: "/admin/home"
   });
 };

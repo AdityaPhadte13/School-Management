@@ -7,8 +7,8 @@ const router = express.Router();
 
 router.get(["/", "/home"], schoolController.getHome);
 
-router.get("/about", schoolController.getAbout);
+router.get(["/about","/teacher/about","/admin/about","/student/about"], schoolController.getAbout);
 
-router.get("/contact", schoolController.getContact);
+router.get(["/contact","/teacher/contact","/admin/contact","/student/contact"], schoolController.getContact);
 
 module.exports = router;

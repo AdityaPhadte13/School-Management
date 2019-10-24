@@ -13,6 +13,6 @@ exports.postStudentLogin = (req, res) => {
 exports.getStudentHome = (req, res) => {
   res.render("student/home", {
     pageTitle: "Student",
-    path: "/student/"
+    path: "/student/home"
   });
 };
