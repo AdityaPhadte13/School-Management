@@ -16,7 +16,8 @@ module.exports = class staff {
     Email,
     Username,
     Password,
-    AdminPrivileges
+    AdminPrivileges,
+    PhoneNo
   ) {
     this.StaffID = StaffID;
     this.Fname = Fname;
@@ -33,21 +34,24 @@ module.exports = class staff {
     this.Username = Username;
     this.Password = Password;
     this.AdminPrivileges = AdminPrivileges;
+    this.PhoneNo = [].concat(PhoneNo);
   }
 
   static FetchAll() {
     return db.execute(
-      `SELECT s.*, n.Post, l.Email, l.Username, l.Password, l.AdminPrivileges 
-      FROM staff s, non_teaching n, non_teaching_login_info l 
-      WHERE s.StaffID = n.StaffID AND n.StaffID = l.StaffID;`
+      `SELECT s.*, n.Post, l.Email, l.Username, l.Password, l.AdminPrivileges, p.PhoneNo 
+      FROM staff s, non_teaching n, non_teaching_login_info l, staff_phone_no p 
+      WHERE s.StaffID = n.StaffID AND n.StaffID = l.StaffID AND s.StaffID = p.StaffID 
+      GROUP BY s.StaffID;`
     );
   }
 
   static FetchByID(Id) {
     return db.execute(
-      `SELECT s.*, n.Post, l.Email, l.Username, l.Password, l.AdminPrivileges 
-      FROM staff s, non_teaching n, non_teaching_login_info l 
-      WHERE s.StaffID = n.StaffID AND n.StaffID = l.StaffID AND s.StaffID = ?;`,
+      `SELECT s.*, n.Post, l.Email, l.Username, l.Password, l.AdminPrivileges, p.PhoneNo 
+      FROM staff s, non_teaching n, non_teaching_login_info l, staff_phone_no p 
+      WHERE s.StaffID = n.StaffID AND n.StaffID = l.StaffID AND s.StaffID = p.StaffID AND s.StaffID = ? 
+      GROUP BY s.StaffID;`,
       [Id]
     );
   }

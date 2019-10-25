@@ -14,7 +14,8 @@ module.exports = class teacher {
     Salary,
     Email,
     Username,
-    Password
+    Password,
+    PhoneNo
   ) {
     this.StaffID = StaffID;
     this.Fname = Fname;
@@ -29,21 +30,24 @@ module.exports = class teacher {
     this.Email = Email;
     this.Username = Username;
     this.Password = Password;
+    this.PhoneNo = [].concat(PhoneNo)
   }
 
   static FetchAll() {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password 
-      FROM staff s, teaching t, teaching_login_info l 
-      WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID;`
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo
+      FROM staff s, teaching t, teaching_login_info l, staff_phone_no p 
+      WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = p.StaffID
+      GROUP BY t.TeacherID;`
     );
   }
 
   static FetchByID(Id) {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password 
-      FROM staff s, teaching t, teaching_login_info l 
-      WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = ?;`,
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo
+      FROM staff s, teaching t, teaching_login_info l, staff_phone_no p 
+      WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = p.StaffID
+      AND t.TeacherID = ? GROUP BY t.TeacherID;;`,
       [Id]
     );
   }

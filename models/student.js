@@ -26,7 +26,7 @@ module.exports = class teacher {
     this.Email = Email;
     this.Username = Username;
     this.Password = Password;
-    this.PhoneNo = PhoneNo;
+    this.PhoneNo = [].concat(PhoneNo);
   }
 
   save() {

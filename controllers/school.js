@@ -1,8 +1,14 @@
+const student = require('../models/teacher')
 exports.getHome = (req, res) => {
-  res.render("index", {
-    pageTitle: "Home",
-    path: "/home"
-  });
+  student.FetchAllLogin()
+    .then(([row]) => {
+      res.render("index", {
+        pageTitle: "Home",
+        path: "/home",
+        teachers: row
+      });
+    })
+    .catch(err => console.log(err))
 };
 
 exports.getAbout = (req, res) => {
