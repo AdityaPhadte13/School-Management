@@ -7,21 +7,21 @@ const student = require('./models/student')
 const schoolRouter = require("./routes/school");
 const studentRouter = require("./routes/student");
 const teacherRouter = require("./routes/teacher");
-const adminRouter = require("./routes/admin");
+const staffRouter = require("./routes/staff");
 
 const errorController = require("./controllers/error");
 
-db.execute("select * from books;")
-  .then(([row, extra]) => {
-    console.log(row);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+// db.execute("select * from books;")
+//   .then(([row, extra]) => {
+//     console.log(row);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
 
-  student.FetchAll().then(([row]) => {
-    console.log(row);
-  });
+//   student.FetchAll().then(([row]) => {
+//     console.log(row);
+//   });
 
 const app = express();
 app.set("view engine", "ejs");
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(schoolRouter);
 app.use("/student", studentRouter);
 app.use("/teacher", teacherRouter);
-app.use("/admin", adminRouter);
+app.use("/staff", staffRouter);
 
 app.use(errorController.get404error);
 
