@@ -59,4 +59,6 @@ module.exports = class staff {
   static FetchAllLogin() {
     return db.execute("SELECT * FROM non_teaching_login_info;");
   }
+
+  // Funtions For Insert Update And Delete records Here
 };

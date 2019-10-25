@@ -30,7 +30,7 @@ module.exports = class teacher {
     this.Email = Email;
     this.Username = Username;
     this.Password = Password;
-    this.PhoneNo = [].concat(PhoneNo)
+    this.PhoneNo = [].concat(PhoneNo);
   }
 
   static FetchAll() {
@@ -55,4 +55,6 @@ module.exports = class teacher {
   static FetchAllLogin() {
     return db.execute("SELECT * FROM teaching_login_info;");
   }
+
+  // Funtions For Insert Update And Delete records Here
 };
