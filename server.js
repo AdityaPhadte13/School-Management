@@ -1,7 +1,8 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
-const db = require('./util/database');
+const db = require("./util/database");
+const student = require('./models/student')
 
 const schoolRouter = require("./routes/school");
 const studentRouter = require("./routes/student");
@@ -10,13 +11,17 @@ const adminRouter = require("./routes/admin");
 
 const errorController = require("./controllers/error");
 
-db.execute('select * from dept;')
-.then((res) => {
-    console.log(res);
-})
-.catch((err) => {
+db.execute("select * from books;")
+  .then(([row, extra]) => {
+    console.log(row);
+  })
+  .catch(err => {
     console.log(err);
-})
+  });
+
+  student.FetchAll().then(([row]) => {
+    console.log(row);
+  });
 
 const app = express();
 app.set("view engine", "ejs");
