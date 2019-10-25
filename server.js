@@ -11,15 +11,8 @@ const staffRouter = require("./routes/staff");
 
 const errorController = require("./controllers/error");
 
-// db.execute("select * from books;")
-//   .then(([row, extra]) => {
-//     console.log(row);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
 
-//   student.FetchAll().then(([row]) => {
+//   student.FetchAllLogin().then(([row]) => {
 //     console.log(row);
 //   });
 

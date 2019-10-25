@@ -3,7 +3,22 @@
 
 <body>
   <%- include('includes/nav.ejs') %>
-  <main>
-
+  <main class="container">
+    <table style="width:100%">
+      <tr>
+        <th>Id</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Password</th>
+      </tr>
+      <% for (teacher of teachers)  {%>
+      <tr>
+        <td><%= teacher.TeacherID %></td>
+        <td><%= teacher.Email %></td>
+        <td><%= teacher.Username %></td>
+        <td><%= teacher.Password %></td>
+      </tr>
+      <% } %>
+    </table> 
   </main>
 <%- include('includes/end.ejs')%>
