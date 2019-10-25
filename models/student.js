@@ -12,7 +12,8 @@ module.exports = class teacher {
     Address,
     Email,
     Username,
-    Password
+    Password,
+    PhoneNo,
   ) {
     this.StudID = StudID;
     this.Class = Class;
@@ -25,21 +26,28 @@ module.exports = class teacher {
     this.Email = Email;
     this.Username = Username;
     this.Password = Password;
+    this.PhoneNo = PhoneNo;
+  }
+
+  save() {
+    db.execute("INSERT INTO student")
   }
 
   static FetchAll() {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password 
-      FROM student s, student_login_info l 
-      WHERE s.StudID = l.StudentID;`
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo 
+      FROM student s, student_login_info l, student_phone_no p 
+      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
+      GROUP BY s.StudID;;`
     );
   }
 
   static FetchByID(Id) {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password 
-      FROM student s, student_login_info l 
-      WHERE s.StudID = l.StudentID AND s.StudID = ?;`,
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo 
+      FROM student s, student_login_info l, student_phone_no p 
+      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
+      AND s.StudID = ? GROUP BY s.StudID;`,
       [Id]
     );
   }

@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const db = require("./util/database");
+const student = require('./models/student')
 
 const schoolRouter = require("./routes/school");
 const studentRouter = require("./routes/student");
@@ -16,6 +17,10 @@ db.execute("select * from books;")
   })
   .catch(err => {
     console.log(err);
+  });
+
+  student.FetchAll().then(([row]) => {
+    console.log(row);
   });
 
 const app = express();
