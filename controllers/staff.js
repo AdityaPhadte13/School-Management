@@ -1,26 +1,27 @@
+const staff = require("../models/staff");
+
 exports.getStaffLogin = (req, res) => {
   res.render("login", {
     pageTitle: "staff Login",
     path: "/staff/login",
     isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
+    userType: req.session.userType,
+    AdminPriviledges: req.session.AdminPriviledges
   });
 };
 
 exports.postStaffLogin = (req, res) => {
-  req.session.isLoggedIn = true;
-  req.session.userType = "staff";
-  console.log(req.body);
-  res.redirect("/staff/home");
-};
-
-exports.getStaffHome = (req, res) => {
-  res.render("staff/home", {
-    pageTitle: "staff",
-    path: "/staff/home",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
-  });
+  staff
+    .FetchAllLogin()
+    .then(([row]) => {
+      // console.log(row);
+      req.session.isLoggedIn = true;
+      req.session.userType = "staff";
+      req.session.AdminPriviledges = false;
+      // console.log(req.body);
+      res.redirect("/staff/home");
+    })
+    .catch(err => console.log(err));
 };
 
 exports.postStaffLogout = (req, res) => {

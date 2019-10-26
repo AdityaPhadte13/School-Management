@@ -3,24 +3,17 @@ exports.getTeacherLogin = (req, res) => {
     pageTitle: "Teacher Login",
     path: "/teacher/login",
     isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
+    userType: req.session.userType,
+    AdminPriviledges: req.session.AdminPriviledges
   });
 };
 
 exports.postTeacherLogin = (req, res) => {
   req.session.isLoggedIn = true;
   req.session.userType = "teacher";
+  req.session.AdminPriviledges = false;
   console.log(req.body);
   res.redirect("/teacher/home");
-};
-
-exports.getTeacherHome = (req, res) => {
-  res.render("teacher/home", {
-    pageTitle: "Teacher",
-    path: "/teacher/home",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
-  });
 };
 
 exports.postTeacherLogout = (req, res) => {

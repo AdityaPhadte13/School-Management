@@ -30,10 +30,10 @@ app.use(
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(schoolRouter);
+app.use("/staff", staffRouter);
 app.use("/student", studentRouter);
 app.use("/teacher", teacherRouter);
-app.use("/staff", staffRouter);
+app.use(schoolRouter);
 
 app.use(errorController.get404error);
 

@@ -22,6 +22,46 @@
           </a>
         </li>
 
+        <% if (isLoggedIn === true) {%>
+
+        <% if ((userType === 'staff' && AdminPriviledges) || userType === 'teacher') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Student</a>
+        </li>
+        <% } %>
+
+        <% if((userType === 'staff' && AdminPriviledges)) { %>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Teacher</a>
+        </li>
+        <% } %>
+
+        <% if (userType === 'teacher' || userType === 'student') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Academic</a>
+        </li>
+        <% } %>
+
+        <% if ((userType === 'staff') || userType === 'student') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Library</a>
+        </li>
+        <% } %>
+
+        <% if (userType === 'teacher') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Notice</a>
+        </li>
+        <% } %>
+
+        <% if ((userType === 'staff' && AdminPriviledges)) {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Class</a>
+        </li>
+        <% } %>
+
+        <% } %>
+
         <li class="nav-item <%= path.includes('/about') ? 'active' : '' %>">
           <a class="nav-link" href="<%= userType === 'teacher'? '/teacher/about' : 
             (userType === 'staff') ? '/staff/about' : 
@@ -35,21 +75,6 @@
             (userType === 'student') ? '/student/contact'
             : '/contact' %>">Contact</a>
         </li>
-
-        <% if (isLoggedIn === true) {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">Student</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">Teacher</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">Academic</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">Library</a>
-        </li>
-        <% } %>
 
       </ul>
       <ul class="navbar-nav ml-auto">

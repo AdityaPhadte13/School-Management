@@ -8,6 +8,4 @@ router.get("/login", teacherController.getTeacherLogin);
 router.post("/login", teacherController.postTeacherLogin);
 router.post("/logout", teacherController.postTeacherLogout);
 
-router.get(["/", "/home"], teacherController.getTeacherHome);
-
 module.exports = router;

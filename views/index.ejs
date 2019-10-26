@@ -6,17 +6,25 @@
   <main class="container">
     <table style="width:100%">
       <tr>
-        <th>Id</th>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Password</th>
+        <th>Date</th>
+        <th>Title</th>
+        <th>File</th>
       </tr>
-      <% for (teacher of teachers)  {%>
+      <% for (notice of notices)  {%>
       <tr>
-        <td><%= teacher.TeacherID %></td>
-        <td><%= teacher.Email %></td>
-        <td><%= teacher.Username %></td>
-        <td><%= teacher.Password %></td>
+        <td>
+          <span>
+            <%= 
+            new Date(notice.DatePosted).getDate() 
+            %>/<%=
+             new Date(notice.DatePosted).getMonth() 
+            %>/<%=
+             new Date(notice.DatePosted).getFullYear() 
+            %>
+          </span>
+        </td>
+        <td><%= notice.Title %></td>
+        <td><%= notice.FileLocation %></td>
       </tr>
       <% } %>
     </table>

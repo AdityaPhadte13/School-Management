@@ -3,24 +3,17 @@ exports.getStudentLogin = (req, res) => {
     pageTitle: "Student Login",
     path: "/student/login",
     isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
+    userType: req.session.userType,
+    AdminPriviledges: req.session.AdminPriviledges
   });
 };
 
 exports.postStudentLogin = (req, res) => {
   req.session.isLoggedIn = true;
   req.session.userType = "student";
+  req.session.AdminPriviledges = false;
   console.log(req.body);
   res.redirect("/student/home");
-};
-
-exports.getStudentHome = (req, res) => {
-  res.render("student/home", {
-    pageTitle: "Student",
-    path: "/student/home",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType
-  });
 };
 
 exports.postStudentLogout = (req, res) => {
