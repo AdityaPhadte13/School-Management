@@ -13,7 +13,7 @@ module.exports = class teacher {
     Email,
     Username,
     Password,
-    PhoneNo,
+    PhoneNo
   ) {
     this.StudID = StudID;
     this.Class = Class;
@@ -30,7 +30,7 @@ module.exports = class teacher {
   }
 
   save() {
-    db.execute("INSERT INTO student")
+    db.execute("INSERT INTO student");
   }
 
   static FetchAll() {
@@ -55,4 +55,6 @@ module.exports = class teacher {
   static FetchAllLogin() {
     return db.execute("SELECT * FROM student_login_info;");
   }
+
+  // Funtions For Insert Update And Delete records Here
 };
