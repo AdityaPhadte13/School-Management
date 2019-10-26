@@ -3,7 +3,9 @@ exports.get404error = (req, res, next) => {
     pageTitle: "Page Not Found",
     path: "",
     errCode: "404",
-    errDescription: "Page Not Found"
+    errDescription: "Page Not Found",
+    isLoggedIn: req.session.isLoggedIn,
+    userType: req.session.userType
   });
 };
 
@@ -12,7 +14,9 @@ exports.get403error = (req, res, next) => {
     pageTitle: "Page Not Found",
     path: "",
     errCode: "403",
-    errDescription: "Forbidden"
+    errDescription: "Forbidden",
+    isLoggedIn: req.session.isLoggedIn,
+    userType: req.session.userType
   });
 };
 
@@ -21,7 +25,9 @@ exports.get401error = (req, res, next) => {
     pageTitle: "Page Not Found",
     path: "",
     errCode: "401",
-    errDescription: "Unauthorised Access"
+    errDescription: "Unauthorised Access",
+    isLoggedIn: req.session.isLoggedIn,
+    userType: req.session.userType
   });
 };
 
@@ -30,6 +36,8 @@ exports.get500error = (req, res, next) => {
     pageTitle: "Page Not Found",
     path: "",
     errCode: "500",
-    errDescription: "Internal Server Error"
+    errDescription: "Internal Server Error",
+    isLoggedIn: req.session.isLoggedIn,
+    userType: req.session.userType
   });
 };

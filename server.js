@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const mySQLStore = require("express-mysql-session")(session);
 const db = require("./util/database");
 const student = require("./models/student");
 
@@ -15,7 +17,16 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 
+const sessionStore = new mySQLStore({ createDatabaseTable: true }, db);
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "asdbjhejhabsk23eorfh8u",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore
+  })
+);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 

@@ -4,9 +4,10 @@ const staffController = require("../controllers/staff");
 
 const router = express.Router();
 
-router.get("/login", staffController.getstaffLogin);
-router.post("/login", staffController.poststaffLogin);
+router.get("/login", staffController.getStaffLogin);
+router.post("/login", staffController.postStaffLogin);
+router.post("/logout", staffController.postStaffLogout);
 
-router.get(["/", "/home"], staffController.getstaffHome);
+router.get(["/", "/home"], staffController.getStaffHome);
 
 module.exports = router;
