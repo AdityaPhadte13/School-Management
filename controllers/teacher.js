@@ -12,8 +12,10 @@ exports.postTeacherLogin = (req, res) => {
   req.session.isLoggedIn = true;
   req.session.userType = "teacher";
   req.session.AdminPriviledges = false;
-  console.log(req.body);
-  res.redirect("/teacher/home");
+  // console.log(req.body);
+  req.session.save(err => {
+    res.redirect("/teacher/home");
+  });
 };
 
 exports.postTeacherLogout = (req, res) => {

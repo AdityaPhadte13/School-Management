@@ -19,7 +19,9 @@ exports.postStaffLogin = (req, res) => {
       req.session.userType = "staff";
       req.session.AdminPriviledges = false;
       // console.log(req.body);
-      res.redirect("/staff/home");
+      req.session.save(err => {
+        res.redirect("/staff/home");
+      });
     })
     .catch(err => console.log(err));
 };
