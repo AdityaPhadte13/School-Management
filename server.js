@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const mySQLStore = require("express-mysql-session")(session);
 const db = require("./util/database");
-const student = require("./models/student");
+const bcrypt = require("bcryptjs");
 
 const schoolRouter = require("./routes/school");
 const studentRouter = require("./routes/student");

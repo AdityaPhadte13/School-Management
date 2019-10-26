@@ -24,13 +24,13 @@
 
         <% if (isLoggedIn === true) {%>
 
-        <% if ((userType === 'staff' && AdminPriviledges) || userType === 'teacher') {%>
+        <% if ((userType === 'staff' && AdminPrivileges) || userType === 'teacher') {%>
         <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
           <a class="nav-link" href="">Student</a>
         </li>
         <% } %>
 
-        <% if((userType === 'staff' && AdminPriviledges)) { %>
+        <% if((userType === 'staff' && AdminPrivileges)) { %>
         <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
           <a class="nav-link" href="">Teacher</a>
         </li>
@@ -54,7 +54,7 @@
         </li>
         <% } %>
 
-        <% if ((userType === 'staff' && AdminPriviledges)) {%>
+        <% if ((userType === 'staff' && AdminPrivileges)) {%>
         <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
           <a class="nav-link" href="">Class</a>
         </li>

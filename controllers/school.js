@@ -16,7 +16,7 @@ exports.getHome = (req, res) => {
         notices: row,
         isLoggedIn: req.session.isLoggedIn,
         userType: req.session.userType,
-        AdminPriviledges: req.session.AdminPriviledges
+        AdminPrivileges: req.session.AdminPrivileges
       });
     })
     .catch(err => console.log(err));
@@ -28,7 +28,7 @@ exports.getAbout = (req, res) => {
     path: req.url,
     isLoggedIn: req.session.isLoggedIn,
     userType: req.session.userType,
-    AdminPriviledges: req.session.AdminPriviledges
+    AdminPrivileges: req.session.AdminPrivileges
   });
 };
 
@@ -38,6 +38,6 @@ exports.getContact = (req, res) => {
     path: req.url,
     isLoggedIn: req.session.isLoggedIn,
     userType: req.session.userType,
-    AdminPriviledges: req.session.AdminPriviledges
+    AdminPrivileges: req.session.AdminPrivileges
   });
 };
