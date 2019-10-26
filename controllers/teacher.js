@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs");
 exports.getTeacherLogin = (req, res) => {
   res.render("login", {
     pageTitle: "Teacher Login",
-    path: "/teacher/login"
+    path: "/teacher/login",
+    errorMessage: req.flash("error")
   });
 };
 
@@ -14,7 +15,10 @@ exports.postTeacherLogin = (req, res) => {
   Teacher.FetchByLogin(Username)
     .then(([teacher]) => {
       if (teacher.length === 0) {
-        return res.redirect("/teacher/login");
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/teacher/login");
+        });
       }
       bcrypt
         .compare(Password, teacher[0].Password)
@@ -29,6 +33,10 @@ exports.postTeacherLogin = (req, res) => {
               res.redirect("/teacher/home");
             });
           }
+          req.flash("error", "Invalid Username or Password");
+          return req.session.save(err => {
+            res.redirect("/teacher/login");
+          });
         })
         .catch(err => console.log(err));
     })

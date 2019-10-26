@@ -5,6 +5,11 @@
     <%- include('includes/nav.ejs') %>
     <main>
         <div class="container col-lg-6 p-5 col-sm-12">
+            <% if((errorMessage.length > 0)) {%>
+            <div class="alert alert-danger text-center" role="alert">
+                <%= errorMessage %>
+            </div>
+            <% } %>
             <div class="border border-light rounded shadow p-4">
                 <div class="text-center">
                     <h1><%= pageTitle %></h1>

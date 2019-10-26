@@ -4,7 +4,8 @@ const Student = require("../models/student");
 exports.getStudentLogin = (req, res) => {
   res.render("login", {
     pageTitle: "Student Login",
-    path: "/student/login"
+    path: "/student/login",
+    errorMessage: req.flash("error")
   });
 };
 
@@ -14,7 +15,10 @@ exports.postStudentLogin = (req, res) => {
   Student.FetchByLogin(Username)
     .then(([student]) => {
       if (student.length === 0) {
-        return res.redirect("/student/login");
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/student/login");
+        });
       }
       bcrypt
         .compare(Password, student[0].Password)
@@ -29,6 +33,10 @@ exports.postStudentLogin = (req, res) => {
               res.redirect("/student/home");
             });
           }
+          req.flash("error", "Invalid Username or Password");
+          return req.session.save(err => {
+            res.redirect("/student/login");
+          });
         })
         .catch(err => console.log(err));
     })

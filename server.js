@@ -5,6 +5,7 @@ const session = require("express-session");
 const mySQLStore = require("express-mysql-session")(session);
 const db = require("./util/database");
 const csrf = require("csurf");
+const flash = require("connect-flash");
 
 const Staff = require("./models/staff");
 const Student = require("./models/student");
@@ -34,6 +35,7 @@ app.use(
   })
 );
 app.use(csrfProtection);
+app.use(flash());
 
 app.use((req, res, next) => {
   if (req.session.userType === "teacher" || req.session.userType === "staff") {

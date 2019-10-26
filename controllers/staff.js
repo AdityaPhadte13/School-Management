@@ -4,7 +4,8 @@ const bcrypt = require("bcryptjs");
 exports.getStaffLogin = (req, res) => {
   res.render("login", {
     pageTitle: "Staff Login",
-    path: "/staff/login"
+    path: "/staff/login",
+    errorMessage: req.flash("error")
   });
 };
 
@@ -14,7 +15,10 @@ exports.postStaffLogin = (req, res) => {
   Staff.FetchByLogin(Username)
     .then(([staff]) => {
       if (staff.length === 0) {
-        return res.redirect("/staff/login");
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/staff/login");
+        });
       }
       bcrypt
         .compare(Password, staff[0].Password)
@@ -31,6 +35,10 @@ exports.postStaffLogin = (req, res) => {
               res.redirect("/staff/home");
             });
           }
+          req.flash("error", "Invalid Username or Password");
+          return req.session.save(err => {
+            res.redirect("/staff/login");
+          });
         })
         .catch(err => console.log(err));
     })
