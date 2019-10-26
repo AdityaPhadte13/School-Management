@@ -56,6 +56,10 @@ module.exports = class staff {
     );
   }
 
+  static FetchNameByID(Id) {
+    return db.execute(`SELECT s.Fname FROM staff s WHERE s.StaffID = ?;`, [Id]);
+  }
+
   static FetchByLogin(Username) {
     return db.execute(
       "SELECT * FROM non_teaching_login_info s WHERE s.Email = ? OR s.Username = ?",

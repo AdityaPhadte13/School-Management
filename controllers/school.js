@@ -13,10 +13,7 @@ exports.getHome = (req, res) => {
       res.render("index", {
         pageTitle: pageTitle,
         path: req.url,
-        notices: row,
-        isLoggedIn: req.session.isLoggedIn,
-        userType: req.session.userType,
-        AdminPrivileges: req.session.AdminPrivileges
+        notices: row
       });
     })
     .catch(err => console.log(err));
@@ -25,19 +22,13 @@ exports.getHome = (req, res) => {
 exports.getAbout = (req, res) => {
   res.render("about", {
     pageTitle: "About",
-    path: req.url,
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType,
-    AdminPrivileges: req.session.AdminPrivileges
+    path: req.url
   });
 };
 
 exports.getContact = (req, res) => {
   res.render("contact", {
     pageTitle: "Contact Us",
-    path: req.url,
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType,
-    AdminPrivileges: req.session.AdminPrivileges
+    path: req.url
   });
 };

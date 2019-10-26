@@ -3,11 +3,8 @@ const bcrypt = require("bcryptjs");
 
 exports.getStaffLogin = (req, res) => {
   res.render("login", {
-    pageTitle: "staff Login",
-    path: "/staff/login",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType,
-    AdminPrivileges: req.session.AdminPrivileges
+    pageTitle: "Staff Login",
+    path: "/staff/login"
   });
 };
 

@@ -93,16 +93,17 @@
         </li>
 
         <% } else { %>
-        <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/myprofile') ? 'active' : '' %>">
+        <li class="nav-item nav-inline dropdown mr-3 <%= path.includes('/myprofile') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            My Profile
+            <%= UName %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <form class="form-inline" action="<%= userType === 'teacher'? '/teacher/logout' : 
+            <form class="form-inline mr-0 p-0" action="<%= userType === 'teacher'? '/teacher/logout' : 
                 (userType === 'staff') ? '/staff/logout' : '/student/logout' %>" method="POST">
-              <button type="submit" class="dropdown-item btn-link">
-                Logout
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="dropdown-item btn-link p-1 m-1">
+                <span class="mr-0">Logout</span>
               </button>
             </form>
           </div>

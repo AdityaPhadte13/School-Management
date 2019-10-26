@@ -4,10 +4,7 @@ const Student = require("../models/student");
 exports.getStudentLogin = (req, res) => {
   res.render("login", {
     pageTitle: "Student Login",
-    path: "/student/login",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType,
-    AdminPrivileges: req.session.AdminPrivileges
+    path: "/student/login"
   });
 };
 

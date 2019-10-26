@@ -4,10 +4,7 @@ const bcrypt = require("bcryptjs");
 exports.getTeacherLogin = (req, res) => {
   res.render("login", {
     pageTitle: "Teacher Login",
-    path: "/teacher/login",
-    isLoggedIn: req.session.isLoggedIn,
-    userType: req.session.userType,
-    AdminPrivileges: req.session.AdminPrivileges
+    path: "/teacher/login"
   });
 };
 
