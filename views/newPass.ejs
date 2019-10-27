@@ -19,16 +19,21 @@
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
                     <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter Password" name="oldPassword" required>
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'oldPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.oldPassword %>" placeholder="Enter Password" name="oldPassword" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter New Password" name="newPassword" required>
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'newPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.newPassword %>" placeholder="Enter New Password" name="newPassword"
+                            required>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Confrim New Password" name="ConfirmPassword" required>
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'ConfirmPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.ConfirmPassword %>" placeholder="Confrim New Password"
+                            name="ConfirmPassword" required>
                     </div>
 
                     <div class="text-center">

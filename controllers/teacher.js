@@ -1,5 +1,6 @@
 const Teacher = require("../models/teacher");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 
 exports.getTeacherLogin = (req, res) => {
   res.render("login", {
@@ -54,7 +55,13 @@ exports.getTeacherNewPass = (req, res) => {
   res.render("newPass", {
     pageTitle: "Change Password",
     path: "/teacher/newPass",
-    errorMessage: req.flash("error")
+    errorMessage: "",
+    validationErrors: [],
+    data: {
+      oldPassword: "",
+      newPassword: "",
+      ConfirmPassword: ""
+    }
   });
 };
 
@@ -62,44 +69,29 @@ exports.postTeacherNewPass = (req, res) => {
   const oldPass = req.body.oldPassword;
   const newPass = req.body.newPassword;
   const conPass = req.body.ConfirmPassword;
-  if (newPass !== conPass) {
-    req.flash("error", "Entered Passwords Do Not Match");
-    return req.session.save(err => {
-      res.redirect("/teacher/newPass");
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array(), errors.array()[0]);
+    return res.status(422).render("newPass", {
+      pageTitle: "Change Password",
+      path: "/teacher/newPass",
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+      data: {
+        oldPassword: oldPass,
+        newPassword: newPass,
+        ConfirmPassword: conPass
+      }
     });
   }
-  Teacher.FetchLoginByID(req.session.User)
-    .then(([teacher]) => {
-      if (teacher.length === 0) {
-        req.flash("error", "Invalid Username or Password");
-        return req.session.save(err => {
-          res.redirect("/teacher/login");
-        });
-      }
-      bcrypt
-        .compare(oldPass, teacher[0].Password)
-        .then(doMatch => {
-          if (doMatch) {
-            return bcrypt.compare(newPass, teacher[0].Password).then(match => {
-              if (match) {
-                req.flash("error", "New Password Cannot Be Old Password");
-                return req.session.save(err => {
-                  return res.redirect("/teacher/newPass");
-                });
-              }
-              return bcrypt.hash(newPass, 10).then(PassHash => {
-                return Teacher.UpdatePassword(req.session.User, PassHash).then(
-                  dummy => res.redirect("/teacher/home")
-                );
-              });
-            });
-          }
-          req.flash("error", "Incorrect Password Entered");
-          return req.session.save(err => {
-            return res.redirect("/teacher/newPass");
-          });
-        })
-        .catch(err => console.log(err));
+  bcrypt
+    .hash(newPass, 10)
+    .then(PassHash => {
+      return Teacher.UpdatePassword(req.session.User, PassHash).then(dummy =>
+        res.redirect("/teacher/home")
+      );
     })
     .catch(err => console.log(err));
 };
