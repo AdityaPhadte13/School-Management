@@ -3,22 +3,34 @@
 
 <body>
   <%- include('includes/nav.ejs') %>
-  <main class="container">
-    <table style="width:100%">
-      <tr>
-        <th>Id</th>
-        <th>Email</th>
-        <th>Username</th>
-        <th>Password</th>
-      </tr>
-      <% for (teacher of teachers)  {%>
-      <tr>
-        <td><%= teacher.TeacherID %></td>
-        <td><%= teacher.Email %></td>
-        <td><%= teacher.Username %></td>
-        <td><%= teacher.Password %></td>
-      </tr>
-      <% } %>
-    </table> 
+  <main class="container pt-5">
+    <table style="width:100%" class="table table-bordered table-hover">
+      <thead>
+        <tr class="bg-primary">
+          <th>Date</th>
+          <th>Title</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (notice of notices)  {%>
+        <tr class="table-primary">
+          <td>
+            <span>
+              <%= 
+            new Date(notice.DatePosted).getDate() 
+            %>/<%=
+             new Date(notice.DatePosted).getMonth() 
+            %>/<%=
+             new Date(notice.DatePosted).getFullYear() 
+            %>
+            </span>
+          </td>
+          <td><%= notice.Title %></td>
+          <td><%= notice.FileLocation %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
   </main>
-<%- include('includes/end.ejs')%>
+  <%- include('includes/end.ejs')%>

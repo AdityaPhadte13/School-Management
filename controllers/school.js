@@ -1,14 +1,22 @@
-const student = require('../models/teacher')
+const notice = require("../models/notice");
 exports.getHome = (req, res) => {
-  student.FetchAllLogin()
+  pageTitle = req.url.includes("student")
+    ? "Student HomePage"
+    : req.url.includes("teacher")
+    ? "Teacher HomePage"
+    : req.url.includes("staff")
+    ? "Staff HomePage"
+    : "HomePage";
+  notice
+    .FetchAll()
     .then(([row]) => {
       res.render("index", {
-        pageTitle: "Home",
-        path: "/home",
-        teachers: row
+        pageTitle: pageTitle,
+        path: req.url,
+        notices: row
       });
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(err));
 };
 
 exports.getAbout = (req, res) => {

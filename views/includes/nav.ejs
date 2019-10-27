@@ -2,7 +2,9 @@
   <h1 class="text-center bg-light" style="margin: 0em; padding: 3px;">
     School Management System
   </h1>
+
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,62 +12,104 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+
         <li class="nav-item <%= path.includes('/home') ? 'active' : '' %>">
-          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/home' : 
-          (path.includes('staff')) ? '/staff/home' : 
-          (path.includes('student')) ? '/student/home'
+          <a class="nav-link" href="<%= userType === 'teacher'? '/teacher/home' : 
+          (userType === 'staff') ? '/staff/home' : 
+          (userType === 'student') ? '/student/home'
           : '/home' %>">
             Home <span class="sr-only">(current)</span>
           </a>
         </li>
-        <li class="nav-item <%= path.includes('/about') ? 'active' : '' %>">
-          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/about' : 
-          (path.includes('staff')) ? '/staff/about' : 
-          (path.includes('student')) ? '/student/about'
-          : '/about' %>">About</a>
-        </li>
-        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
-          <a class="nav-link" href="<%= path.includes('teacher') ? '/teacher/contact' : 
-          (path.includes('staff')) ? '/staff/contact' : 
-          (path.includes('student')) ? '/student/contact'
-          : '/contact' %>">Contact</a>
-        </li>
-        <% if (path.includes("staff") && !path.includes("login")) {%>
+
+        <% if (isLoggedIn === true) {%>
+
+        <% if ((userType === 'staff' && AdminPrivileges) || userType === 'teacher') {%>
         <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">student</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">teacher</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">academic</a>
-        </li>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
-          <a class="nav-link" href="">library</a>
+          <a class="nav-link" href="">Student</a>
         </li>
         <% } %>
+
+        <% if((userType === 'staff' && AdminPrivileges)) { %>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Teacher</a>
+        </li>
+        <% } %>
+
+        <% if (userType === 'teacher' || userType === 'student') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Academic</a>
+        </li>
+        <% } %>
+
+        <% if ((userType === 'staff') || userType === 'student') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Library</a>
+        </li>
+        <% } %>
+
+        <% if (userType === 'teacher') {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Notice</a>
+        </li>
+        <% } %>
+
+        <% if ((userType === 'staff' && AdminPrivileges)) {%>
+        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+          <a class="nav-link" href="">Class</a>
+        </li>
+        <% } %>
+
+        <% } %>
+
+        <li class="nav-item <%= path.includes('/about') ? 'active' : '' %>">
+          <a class="nav-link" href="<%= userType === 'teacher'? '/teacher/about' : 
+            (userType === 'staff') ? '/staff/about' : 
+            (userType === 'student') ? '/student/about'
+            : '/about' %>">About</a>
+        </li>
+
+        <li class="nav-item <%= path.includes('/contact') ? 'active' : '' %>">
+          <a class="nav-link" href="<%= userType === 'teacher'? '/teacher/contact' : 
+            (userType === 'staff') ? '/staff/contact' : 
+            (userType === 'student') ? '/student/contact'
+            : '/contact' %>">Contact</a>
+        </li>
+
       </ul>
       <ul class="navbar-nav ml-auto">
+
+        <% if (!isLoggedIn) { %>
         <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            login As
+            Login As
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="/staff/login">staff</a>
+            <a class="dropdown-item" href="/staff/login">Staff</a>
             <a class="dropdown-item" href="/student/login">Student</a>
             <a class="dropdown-item" href="/teacher/login">Teacher</a>
           </div>
         </li>
-        <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/myprofile') ? 'active' : '' %>">
+
+        <% } else { %>
+        <li class="nav-item nav-inline dropdown mr-3 <%= path.includes('/myprofile') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            my profile
+            <%= UName %>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">signout</a>
+            <form class="form-inline mr-0 p-0" action="<%= userType === 'teacher'? '/teacher/logout' : 
+                (userType === 'staff') ? '/staff/logout' : '/student/logout' %>" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="dropdown-item btn-link p-1 m-1">
+                <span class="mr-0">Logout</span>
+              </button>
+            </form>
           </div>
         </li>
+        <% } %>
+
       </ul>
     </div>
   </nav>

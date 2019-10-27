@@ -5,11 +5,17 @@
     <%- include('includes/nav.ejs') %>
     <main>
         <div class="container col-lg-6 p-5 col-sm-12">
+            <% if((errorMessage.length > 0)) {%>
+            <div class="alert alert-danger text-center" role="alert">
+                <%= errorMessage %>
+            </div>
+            <% } %>
             <div class="border border-light rounded shadow p-4">
                 <div class="text-center">
                     <h1><%= pageTitle %></h1>
                 </div>
                 <form method="POST" action="<%= path %>" class="">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="form-group">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                             placeholder="Enter email or username" name="Username" required>
@@ -27,4 +33,4 @@
     </main>
 
 
-<%- include('includes/end.ejs')%>
+    <%- include('includes/end.ejs')%>

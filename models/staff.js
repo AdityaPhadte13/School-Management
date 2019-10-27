@@ -56,8 +56,15 @@ module.exports = class staff {
     );
   }
 
-  static FetchAllLogin() {
-    return db.execute("SELECT * FROM non_teaching_login_info;");
+  static FetchNameByID(Id) {
+    return db.execute(`SELECT s.Fname FROM staff s WHERE s.StaffID = ?;`, [Id]);
+  }
+
+  static FetchByLogin(Username) {
+    return db.execute(
+      "SELECT * FROM non_teaching_login_info s WHERE s.Email = ? OR s.Username = ?",
+      [Username, Username]
+    );
   }
 
   // Funtions For Insert Update And Delete records Here

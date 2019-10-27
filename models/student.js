@@ -56,5 +56,17 @@ module.exports = class teacher {
     return db.execute("SELECT * FROM student_login_info;");
   }
 
+  static FetchNameByID(Id) {
+    return db.execute(`SELECT s.Fname FROM student s WHERE s.StudID = ?;`, [
+      Id
+    ]);
+  }
+
+  static FetchByLogin(Username) {
+    return db.execute(
+      "SELECT * FROM student_login_info s WHERE s.Email = ? OR s.Username = ?",
+      [Username, Username]
+    );
+  }
   // Funtions For Insert Update And Delete records Here
 };
