@@ -7,14 +7,17 @@
     <table style="width:100%" class="table table-bordered table-hover">
       <thead>
         <tr class="bg-primary">
+          <th>Sr. No.</th>
           <th>Date</th>
           <th>Title</th>
           <th>File</th>
         </tr>
       </thead>
       <tbody>
+        <% var i = 1; %>
         <% for (notice of notices)  {%>
         <tr class="table-primary">
+          <td><%= i %></td>
           <td>
             <span>
               <%= 
@@ -29,7 +32,7 @@
           <td><%= notice.Title %></td>
           <td><%= notice.FileLocation %></td>
         </tr>
-        <% } %>
+        <% i++; } %>
       </tbody>
     </table>
   </main>

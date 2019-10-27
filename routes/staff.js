@@ -11,6 +11,24 @@ const isAdmin = require("../middleware/isAdmin");
 const router = express.Router();
 
 router.get(["/", "/home"], isAuth, schoolController.getHome);
+router.get("/staffData", isAuth, isAdmin, staffController.getStaffData);
+router.post(
+  "/staffData",
+  [
+    body("SearchText", "String Should Only Contain Numbers and Characters")
+      .trim()
+      .custom(value => {
+        if (value) {
+          return true;
+        }
+        throw new Error("String Should Not Be Empty");
+      })
+      .isAlphanumeric()
+  ],
+  isAuth,
+  isAdmin,
+  staffController.postStaffData
+);
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);
 

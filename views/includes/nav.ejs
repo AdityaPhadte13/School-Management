@@ -24,38 +24,44 @@
 
         <% if (isLoggedIn === true) {%>
 
+        <% if ((userType === 'staff' && AdminPrivileges)) {%>
+        <li class="nav-item <%= path.includes('staffData') ? 'active' : '' %>">
+          <a class="nav-link" href="/staff/StaffData">Staff</a>
+        </li>
+        <% } %>
+
         <% if ((userType === 'staff' && AdminPrivileges) || userType === 'teacher') {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('studentData') ? 'active' : '' %>">
           <a class="nav-link" href="">Student</a>
         </li>
         <% } %>
 
         <% if((userType === 'staff' && AdminPrivileges)) { %>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('teacherData') ? 'active' : '' %>">
           <a class="nav-link" href="">Teacher</a>
         </li>
         <% } %>
 
         <% if (userType === 'teacher' || userType === 'student') {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('academic') ? 'active' : '' %>">
           <a class="nav-link" href="">Academic</a>
         </li>
         <% } %>
 
         <% if ((userType === 'staff') || userType === 'student') {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('library') ? 'active' : '' %>">
           <a class="nav-link" href="">Library</a>
         </li>
         <% } %>
 
         <% if (userType === 'teacher') {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('notice') ? 'active' : '' %>">
           <a class="nav-link" href="">Notice</a>
         </li>
         <% } %>
 
         <% if ((userType === 'staff' && AdminPrivileges)) {%>
-        <li class="nav-item <%= path.includes('staff/login') ? 'active' : '' %>">
+        <li class="nav-item <%= path.includes('class') ? 'active' : '' %>">
           <a class="nav-link" href="">Class</a>
         </li>
         <% } %>
@@ -93,7 +99,7 @@
         </li>
 
         <% } else { %>
-        <li class="nav-item nav-inline dropdown mr-4 pr-4 <%= path.includes('/myprofile') ? 'active' : '' %>">
+        <li class="nav-item nav-inline dropdown mr-4 pr-4 <%= path.includes('newPass') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= UName %>

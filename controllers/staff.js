@@ -97,3 +97,50 @@ exports.postStaffNewPass = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+
+exports.getStaffData = (req, res) => {
+  Staff.FetchAll()
+    .then(([staff]) => {
+      res.render("./staff/staff", {
+        pageTitle: "Staff Data",
+        path: "/staff/staffData",
+        staff: staff,
+        input: "",
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postStaffData = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return Staff.FetchAll()
+      .then(([staff]) => {
+        return res.status(422).render("./staff/staff", {
+          pageTitle: "Staff Data",
+          path: "/staff/staffData",
+          staff: staff,
+          input: req.body.SearchText,
+          errorMessage: errors.array()[0],
+          validationErrors: errors.array()
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  Staff.SearchByID(req.body.SearchText)
+    .then(([staff]) => {
+      return res.render("./staff/staff", {
+        pageTitle: "Staff Data",
+        path: "/staff/staffData",
+        staff: staff,
+        input: req.body.SearchText,
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
