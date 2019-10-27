@@ -52,14 +52,24 @@ module.exports = class teacher {
     );
   }
 
-  static FetchAllLogin() {
-    return db.execute("SELECT * FROM teaching_login_info;");
-  }
-
   static FetchByLogin(Username) {
     return db.execute(
       "SELECT * FROM teaching_login_info s WHERE s.Email = ? OR s.Username = ?",
       [Username, Username]
+    );
+  }
+
+  static FetchLoginByID(Id) {
+    return db.execute(
+      "SELECT * FROM teaching_login_info WHERE TeacherID = ?;",
+      [Id]
+    );
+  }
+
+  static UpdatePassword(Id, Password) {
+    return db.execute(
+      "UPDATE teaching_login_info SET Password=? WHERE TeacherID = ?",
+      [Password, Id]
     );
   }
   // Funtions For Insert Update And Delete records Here

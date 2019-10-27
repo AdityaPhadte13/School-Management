@@ -80,7 +80,7 @@
       <ul class="navbar-nav ml-auto">
 
         <% if (!isLoggedIn) { %>
-        <li class="nav-item nav-inline dropdown mr-auto <%= path.includes('/login') ? 'active' : '' %>">
+        <li class="nav-item nav-inline dropdown mr-auto mr-4 pr-4 <%= path.includes('/login') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Login As
@@ -93,13 +93,19 @@
         </li>
 
         <% } else { %>
-        <li class="nav-item nav-inline dropdown mr-3 <%= path.includes('/myprofile') ? 'active' : '' %>">
+        <li class="nav-item nav-inline dropdown mr-4 pr-4 <%= path.includes('/myprofile') ? 'active' : '' %>">
           <a class="nav-inline nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <%= UName %>
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <form class="form-inline mr-0 p-0" action="<%= userType === 'teacher'? '/teacher/logout' : 
+          <div class="dropdown-menu ml-0 mr-0" aria-labelledby="navbarDropdown">
+
+            <a class="dropdown-item pl-1 ml-1" href="<%= userType === 'teacher'? '/teacher/newPass' : 
+            (userType === 'staff') ? '/staff/newPass' : '/student/newPass'%>">
+              Change Password
+            </a>
+
+            <form class="form-inline mr-0 p-0 ml-0" action="<%= userType === 'teacher'? '/teacher/logout' : 
                 (userType === 'staff') ? '/staff/logout' : '/student/logout' %>" method="POST">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button type="submit" class="dropdown-item btn-link p-1 m-1">

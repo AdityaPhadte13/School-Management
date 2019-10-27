@@ -67,5 +67,19 @@ module.exports = class staff {
     );
   }
 
+  static FetchLoginByID(Id) {
+    return db.execute(
+      "SELECT * FROM non_teaching_login_info WHERE StaffID = ?;",
+      [Id]
+    );
+  }
+
+  static UpdatePassword(Id, Password) {
+    return db.execute(
+      "UPDATE non_teaching_login_info SET Password=? WHERE StaffID = ?",
+      [Password, Id]
+    );
+  }
+
   // Funtions For Insert Update And Delete records Here
 };

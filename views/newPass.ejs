@@ -14,18 +14,25 @@
                 <div class="text-center">
                     <h1><%= pageTitle %></h1>
                 </div>
+
                 <form method="POST" action="<%= path %>" class="">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
                     <div class="form-group">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter email or username" name="Username" required>
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="Enter Password" name="oldPassword" required>
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="Enter Password" name="Password" required>
+                            placeholder="Enter New Password" name="newPassword" required>
                     </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="Confrim New Password" name="ConfirmPassword" required>
+                    </div>
+
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary">Change</button>
                     </div>
                 </form>
             </div>

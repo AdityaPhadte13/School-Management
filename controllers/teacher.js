@@ -49,3 +49,57 @@ exports.postTeacherLogout = (req, res) => {
     res.redirect("/home");
   });
 };
+
+exports.getTeacherNewPass = (req, res) => {
+  res.render("newPass", {
+    pageTitle: "Change Password",
+    path: "/teacher/newPass",
+    errorMessage: req.flash("error")
+  });
+};
+
+exports.postTeacherNewPass = (req, res) => {
+  const oldPass = req.body.oldPassword;
+  const newPass = req.body.newPassword;
+  const conPass = req.body.ConfirmPassword;
+  if (newPass !== conPass) {
+    req.flash("error", "Entered Passwords Do Not Match");
+    return req.session.save(err => {
+      res.redirect("/teacher/newPass");
+    });
+  }
+  Teacher.FetchLoginByID(req.session.User)
+    .then(([teacher]) => {
+      if (teacher.length === 0) {
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/teacher/login");
+        });
+      }
+      bcrypt
+        .compare(oldPass, teacher[0].Password)
+        .then(doMatch => {
+          if (doMatch) {
+            return bcrypt.compare(newPass, teacher[0].Password).then(match => {
+              if (match) {
+                req.flash("error", "New Password Cannot Be Old Password");
+                return req.session.save(err => {
+                  return res.redirect("/teacher/newPass");
+                });
+              }
+              return bcrypt.hash(newPass, 10).then(PassHash => {
+                return Teacher.UpdatePassword(req.session.User, PassHash).then(
+                  dummy => res.redirect("/teacher/home")
+                );
+              });
+            });
+          }
+          req.flash("error", "Incorrect Password Entered");
+          return req.session.save(err => {
+            return res.redirect("/teacher/newPass");
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};

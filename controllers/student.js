@@ -49,3 +49,57 @@ exports.postStudentLogout = (req, res) => {
     res.redirect("/home");
   });
 };
+
+exports.getStudentNewPass = (req, res) => {
+  res.render("newPass", {
+    pageTitle: "Change Password",
+    path: "/student/newPass",
+    errorMessage: req.flash("error")
+  });
+};
+
+exports.postStudentNewPass = (req, res) => {
+  const oldPass = req.body.oldPassword;
+  const newPass = req.body.newPassword;
+  const conPass = req.body.ConfirmPassword;
+  if (newPass !== conPass) {
+    req.flash("error", "Entered Passwords Do Not Match");
+    return req.session.save(err => {
+      res.redirect("/student/newPass");
+    });
+  }
+  Student.FetchLoginByID(req.session.User)
+    .then(([student]) => {
+      if (student.length === 0) {
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/student/login");
+        });
+      }
+      bcrypt
+        .compare(oldPass, student[0].Password)
+        .then(doMatch => {
+          if (doMatch) {
+            return bcrypt.compare(newPass, student[0].Password).then(match => {
+              if (match) {
+                req.flash("error", "New Password Cannot Be Old Password");
+                return req.session.save(err => {
+                  return res.redirect("/student/newPass");
+                });
+              }
+              return bcrypt.hash(newPass, 10).then(PassHash => {
+                return Student.UpdatePassword(req.session.User, PassHash).then(
+                  dummy => res.redirect("/student/home")
+                );
+              });
+            });
+          }
+          req.flash("error", "Incorrect Password Entered");
+          return req.session.save(err => {
+            return res.redirect("/student/newPass");
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};

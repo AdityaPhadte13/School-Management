@@ -51,3 +51,57 @@ exports.postStaffLogout = (req, res) => {
     res.redirect("/home");
   });
 };
+
+exports.getStaffNewPass = (req, res) => {
+  res.render("newPass", {
+    pageTitle: "Change Password",
+    path: "/staff/newPass",
+    errorMessage: req.flash("error")
+  });
+};
+
+exports.postStaffNewPass = (req, res) => {
+  const oldPass = req.body.oldPassword;
+  const newPass = req.body.newPassword;
+  const conPass = req.body.ConfirmPassword;
+  if (newPass !== conPass) {
+    req.flash("error", "Entered Passwords Do Not Match");
+    return req.session.save(err => {
+      res.redirect("/staff/newPass");
+    });
+  }
+  Staff.FetchLoginByID(req.session.User)
+    .then(([staff]) => {
+      if (staff.length === 0) {
+        req.flash("error", "Invalid Username or Password");
+        return req.session.save(err => {
+          res.redirect("/staff/login");
+        });
+      }
+      bcrypt
+        .compare(oldPass, staff[0].Password)
+        .then(doMatch => {
+          if (doMatch) {
+            return bcrypt.compare(newPass, staff[0].Password).then(match => {
+              if (match) {
+                req.flash("error", "New Password Cannot Be Old Password");
+                return req.session.save(err => {
+                  return res.redirect("/staff/newPass");
+                });
+              }
+              return bcrypt.hash(newPass, 10).then(PassHash => {
+                return Staff.UpdatePassword(req.session.User, PassHash).then(
+                  dummy => res.redirect("/staff/home")
+                );
+              });
+            });
+          }
+          req.flash("error", "Incorrect Password Entered");
+          return req.session.save(err => {
+            return res.redirect("/staff/newPass");
+          });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};
