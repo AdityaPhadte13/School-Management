@@ -156,6 +156,12 @@ exports.getStaffDataAdd = (req, res) => {
   })
 }
 
+exports.getStaffDataView = (req,res) => {
+  res.render('./staff/card',{
+    pageTitle: "Details",
+    path: "/staffData/view"
+  })
+}
 // StaffData Controllers End
 
 // TeacherData Controllers Start
