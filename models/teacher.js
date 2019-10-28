@@ -47,7 +47,7 @@ module.exports = class teacher {
       `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo
       FROM staff s, teaching t, teaching_login_info l, staff_phone_no p 
       WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = p.StaffID
-      AND t.TeacherID = ? GROUP BY t.TeacherID;;`,
+      AND t.TeacherID = ? GROUP BY t.TeacherID;`,
       [Id]
     );
   }
@@ -72,5 +72,22 @@ module.exports = class teacher {
       [Password, Id]
     );
   }
+
+  static SearchByID(Id) {
+    const S = String("%" + String(Id) + "%");
+    const S1 = String(Id);
+    return db.execute(
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo FROM staff s, teaching t, teaching_login_info l, staff_phone_no p 
+      WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = p.StaffID 
+      AND(t.TeacherID = ? OR s.Fname LIKE ? OR s.Mname LIKE ? OR s.Lname LIKE ? 
+      OR s.Qualification LIKE ? OR s.Address LIKE ? OR s.Gender = ?) GROUP BY t.TeacherID`,
+      [Number(Id), S, S, S, S, S, S1]
+    );
+  }
   // Funtions For Insert Update And Delete records Here
 };
+
+`SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo FROM staff s, teaching t, teaching_login_info l, staff_phone_no p 
+WHERE s.StaffID = t.TeacherID AND t.TeacherID = l.TeacherID AND s.StaffID = p.StaffID 
+AND(t.TeacherID = "" OR s.Fname LIKE "%%" OR s.Mname LIKE "%%" OR s.Lname LIKE "%%" 
+OR s.Qualification LIKE "%%" OR s.Address LIKE "%%" OR s.Gender = "%%") GROUP BY t.TeacherID`;

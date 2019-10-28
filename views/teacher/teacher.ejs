@@ -1,0 +1,90 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/nav.ejs') %>
+    <main class="container pt-5">
+        <% if((validationErrors.length > 0)) {%>
+        <div class="alert alert-danger text-center" role="alert">
+            <%= errorMessage.msg %>
+        </div>
+        <% } %>
+        <div class="text-center">
+            <form class="form-inline" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text"
+                        class="form-control <%= validationErrors.find(e => e.param === 'SearchText') ? 'is-invalid' : '' %>"
+                        name="SearchText" placeholder="Enter Name or ID" value="<%= input %>">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+            </form>
+        </div>
+
+        <table style="width:100%" class="table table-bordered table-hover">
+            <thead>
+                <tr class="bg-primary">
+                    <th>SrNo.</th>
+                    <th>Name</th>
+                    <th>Qualification</th>
+                    <th>Post</th>
+                    <th>Address</th>
+                    <th>PhoneNo</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% var i = 1; %>
+                <% for (per of teacher)  {%>
+                <tr class="table-primary">
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/teacherData/view/<%= per.StaffID %>">
+                            <%= i %>
+                        </a>
+                    </td>
+                    <td>
+                        <span>
+                            <a style="text-decoration: none; cursor: pointer; color: black;"
+                                href="/staff/teacherData/view/<%= per.StaffID %>">
+                                <%= per.Fname %>
+                                <%= per.Mname %>
+                                <%= per.Lname %>
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/teacherData/view/<%= per.StaffID %>">
+                            <%= per.Qualification %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/teacherData/view/<%= per.StaffID %>">
+                            <%= per.Gender %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/teacherData/view/<%= per.StaffID %>">
+                            <%= per.Address %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/teacherData/view/<%= per.StaffID %>">
+                            <%= per.PhoneNo %>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/staff/teacherData/edit/<%= per.StaffID %>">Edit</a>
+                    </td>
+
+                </tr>
+                <% i++; } %>
+            </tbody>
+        </table>
+    </main>
+    <%- include('../includes/end.ejs')%>

@@ -1,4 +1,5 @@
 const Staff = require("../models/staff");
+const Teacher = require("../models/teacher");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
@@ -137,6 +138,53 @@ exports.postStaffData = (req, res) => {
         pageTitle: "Staff Data",
         path: "/staff/staffData",
         staff: staff,
+        input: req.body.SearchText,
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getTeacherData = (req, res) => {
+  Teacher.FetchAll()
+    .then(([teacher]) => {
+      res.render("./teacher/teacher", {
+        pageTitle: "teacher Data",
+        path: "/teacher/teacherData",
+        teacher: teacher,
+        input: "",
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postTeacherData = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return Teacher.FetchAll()
+      .then(([teacher]) => {
+        return res.status(422).render("./teacher/teacher", {
+          pageTitle: "teacher Data",
+          path: "/staff/teacherData",
+          teacher: teacher,
+          input: req.body.SearchText,
+          errorMessage: errors.array()[0],
+          validationErrors: errors.array()
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  Teacher.SearchByID(req.body.SearchText)
+    .then(([teacher]) => {
+      return res.render("./teacher/teacher", {
+        pageTitle: "teacher Data",
+        path: "/staff/teacherData",
+        teacher: teacher,
         input: req.body.SearchText,
         errorMessage: "",
         validationErrors: []
