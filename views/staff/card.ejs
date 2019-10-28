@@ -5,13 +5,41 @@
     <%- include('../includes/nav.ejs') %>
     <main class="container">
         <h1><%= pageTitle %></h1>
-        <div class="card" style="width: 18rem;">
+        <div class="card">
 
-                <div class="card-body">
-                  <h5 class="card-title">Staff details</h5>
-                  
-                  <a href="#" class="btn btn-primary">Edit</a>
+            <div class="card-body">
+                <h5 class="card-title">Staff details</h5>
+                    <h6>
+                        Fname:
+                        <br>
+                        Mname:
+                        <br>
+                        Lname:
+                    </h6>
+                
+                    <h6>
+                        Qualification:
+                    </h6>
+            
+                    <h6>
+                        Post:
+                    </h6>
+               
+                    <h6>
+                        Gender:
+                    <h6>
+              
+                    <h6>
+                        Address:
+                    </h6>
+               
+                    <h6>
+                        PhoneNo:
+                    </h6>
+                    <div class="text-center">
+                    <a href="/staff/staffData/edit/>" class="btn btn-primary">Edit</a>
+                    </div>        
                 </div>
-              </div>
+        </div>
     </main>
     <%- include('../includes/end.ejs')%>
