@@ -1,7 +1,7 @@
 const Staff = require("../models/staff");
 const Teacher = require("../models/teacher");
 const Student = require("../models/student");
-const Class = require("../models/schoolClass");
+const SClass = require("../models/schoolClass");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
@@ -203,13 +203,19 @@ exports.postTeacherData = (req, res) => {
 exports.getStudentData = (req, res) => {
   Student.FetchAll()
     .then(([student]) => {
-      res.render("./student/student", {
-        pageTitle: "student Data",
-        path: "/staff/studentData",
-        student: student,
-        input: "",
-        errorMessage: "",
-        validationErrors: []
+      return SClass.FetchAll().then(([sclass]) => {
+        return res.render("./student/student", {
+          pageTitle: "student Data",
+          path: "/staff/studentData",
+          student: student,
+          input: {
+            text: "",
+            option: ""
+          },
+          errorMessage: "",
+          validationErrors: [],
+          sclass: sclass
+        });
       });
     })
     .catch(err => console.log(err));
@@ -218,30 +224,44 @@ exports.getStudentData = (req, res) => {
 exports.postStudentData = (req, res) => {
   const errors = validationResult(req);
 
+  console.log(req.body.Sclass);
+
   if (!errors.isEmpty()) {
     return Student.FetchAll()
       .then(([student]) => {
-        return res.status(422).render("./student/student", {
-          pageTitle: "student Data",
-          path: "/staff/studentData",
-          student: student,
-          input: req.body.SearchText,
-          errorMessage: errors.array()[0],
-          validationErrors: errors.array()
+        return SClass.FetchAll().then(([sclass]) => {
+          return res.status(422).render("./student/student", {
+            pageTitle: "student Data",
+            path: "/staff/studentData",
+            student: student,
+            input: {
+              text: req.body.SearchText,
+              option: req.body.Sclass
+            },
+            errorMessage: errors.array()[0],
+            validationErrors: errors.array(),
+            sclass: sclass
+          });
         });
       })
       .catch(err => console.log(err));
   }
 
-  Student.SearchByID(req.body.SearchText)
+  Student.SearchByID(req.body.SearchText, req.body.Sclass)
     .then(([student]) => {
-      return res.render("./student/student", {
-        pageTitle: "student Data",
-        path: "/staff/studentData",
-        student: student,
-        input: req.body.SearchText,
-        errorMessage: "",
-        validationErrors: []
+      return SClass.FetchAll().then(([sclass]) => {
+        return res.render("./student/student", {
+          pageTitle: "student Data",
+          path: "/staff/studentData",
+          student: student,
+          input: {
+            text: req.body.SearchText,
+            option: req.body.Sclass
+          },
+          errorMessage: "",
+          validationErrors: [],
+          sclass: sclass
+        });
       });
     })
     .catch(err => console.log(err));

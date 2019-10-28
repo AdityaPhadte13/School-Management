@@ -16,9 +16,20 @@
                     <label for="inputPassword2" class="sr-only">Password</label>
                     <input type="text"
                         class="form-control <%= validationErrors.find(e => e.param === 'SearchText') ? 'is-invalid' : '' %>"
-                        name="SearchText" placeholder="Enter Name or ID" value="<%= input %>">
+                        name="SearchText" placeholder="Enter Name or ID" value="<%= input.text %>">
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <div class="form-group mx-sm-3 mb-2">
+                    <select class="custom-select" name="Sclass">
+                        <option name="Sclass" value="" <%= (input.option == '') ? 'selected' : '' %>>Select a Class
+                        </option>
+                        <% for (c of sclass) {%>
+                        <option name="Sclass" value="<%= c.ClassID %>"
+                            <%= (input.option == c.ClassID) ? 'selected' : '' %>>
+                            <%= c.STD + " - " + c.Division %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mx-sm-3 mb-2">Search</button>
             </form>
         </div>
 

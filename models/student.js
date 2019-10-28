@@ -83,19 +83,30 @@ module.exports = class teacher {
     );
   }
 
-  static SearchByID(Id, sClass = null) {
+  static SearchByID(Id, sClass = "") {
     const S = String("%" + String(Id) + "%");
     const S1 = String(Id);
-    const S2 = sClass !== null ? sClass : "";
-    return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
+    if (sClass === "") {
+      return db.execute(
+        `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
       FROM student s, student_login_info l, student_phone_no p,Class c 
       WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
       AND c.ClassID = s.Class AND (s.StudID = ? OR s.RollNo = ? OR s.Fname LIKE ? OR s.Mname LIKE ? 
-      OR s.Lname LIKE ? OR s.Address LIKE ? OR s.Gender = ? OR s.Class = ?)
+      OR s.Lname LIKE ? OR s.Address LIKE ? OR s.Gender = ?)
       GROUP BY s.StudID;`,
-      [Number(Id), Number(Id), S, S, S, S, S1, S2]
-    );
+        [Number(Id), Number(Id), S, S, S, S, S1]
+      );
+    } else {
+      return db.execute(
+        `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
+      FROM student s, student_login_info l, student_phone_no p,Class c 
+      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
+      AND c.ClassID = s.Class AND (s.StudID = ? OR s.RollNo = ? OR s.Fname LIKE ? OR s.Mname LIKE ? 
+      OR s.Lname LIKE ? OR s.Address LIKE ? OR s.Gender = ?) AND s.Class = ?
+      GROUP BY s.StudID;`,
+        [Number(Id), Number(Id), S, S, S, S, S1, Number(sClass)]
+      );
+    }
   }
 
   // Funtions For Insert Update And Delete records Here
