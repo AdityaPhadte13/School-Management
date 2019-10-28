@@ -11,6 +11,7 @@ const isAdmin = require("../middleware/isAdmin");
 const router = express.Router();
 
 router.get(["/", "/home"], isAuth, schoolController.getHome);
+
 router.get("/staffData", isAuth, isAdmin, staffController.getStaffData);
 router.post(
   "/staffData",
@@ -24,6 +25,7 @@ router.post(
   isAdmin,
   staffController.postStaffData
 );
+router.get("/staffData/add", staffController.getStaffDataAdd)
 
 router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);
 router.post(
