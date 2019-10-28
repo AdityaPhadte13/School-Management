@@ -1,0 +1,48 @@
+<%- include('includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('includes/nav.ejs') %>
+    <main>
+        <div class="container col-lg-6 p-5 col-sm-12">
+            <% if((errorMessage.length > 0)) {%>
+            <div class="alert alert-danger text-center" role="alert">
+                <%= errorMessage %>
+            </div>
+            <% } %>
+            <div class="border border-light rounded shadow p-4">
+                <div class="text-center">
+                    <h1><%= pageTitle %></h1>
+                </div>
+
+                <form method="POST" action="<%= path %>" class="">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                    <div class="form-group">
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'oldPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.oldPassword %>" placeholder="Enter Password" name="oldPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'newPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.newPassword %>" placeholder="Enter New Password" name="newPassword"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password"
+                            class="form-control <%= validationErrors.find(e => e.param === 'ConfirmPassword') ? 'is-invalid' : '' %>"
+                            value="<%= data.ConfirmPassword %>" placeholder="Confrim New Password"
+                            name="ConfirmPassword" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Change</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+    <%- include('includes/end.ejs')%>

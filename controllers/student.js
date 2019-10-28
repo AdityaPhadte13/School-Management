@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const Student = require("../models/student");
+const { validationResult } = require("express-validator");
 
 exports.getStudentLogin = (req, res) => {
   res.render("login", {
@@ -48,4 +49,49 @@ exports.postStudentLogout = (req, res) => {
     console.log(err);
     res.redirect("/home");
   });
+};
+
+exports.getStudentNewPass = (req, res) => {
+  res.render("newPass", {
+    pageTitle: "Change Password",
+    path: "/student/newPass",
+    errorMessage: "",
+    validationErrors: [],
+    data: {
+      oldPassword: "",
+      newPassword: "",
+      ConfirmPassword: ""
+    }
+  });
+};
+
+exports.postStudentNewPass = (req, res) => {
+  const oldPass = req.body.oldPassword;
+  const newPass = req.body.newPassword;
+  const conPass = req.body.ConfirmPassword;
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array(), errors.array()[0]);
+    return res.status(422).render("newPass", {
+      pageTitle: "Change Password",
+      path: "/student/newPass",
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array(),
+      data: {
+        oldPassword: oldPass,
+        newPassword: newPass,
+        ConfirmPassword: conPass
+      }
+    });
+  }
+  bcrypt
+    .hash(newPass, 10)
+    .then(PassHash => {
+      return Student.UpdatePassword(req.session.User, PassHash).then(dummy =>
+        res.redirect("/student/home")
+      );
+    })
+    .catch(err => console.log(err));
 };
