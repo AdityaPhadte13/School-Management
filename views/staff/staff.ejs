@@ -9,7 +9,7 @@
             <%= errorMessage.msg %>
         </div>
         <% } %>
-        <div class="text-center">
+        <div class="row" style="display: flex;">
             <form class="form-inline" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-group mx-sm-3 mb-2">
@@ -20,9 +20,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Search</button>
             </form>
+            <div class="ml-auto mr-4"> <a href="staffData/add" class="btn btn-primary mb-2">Add Staff</a></div>
         </div>
-
-        <table style="width:100%" class="table table-bordered table-hover">
+        <table style="width:100%" class="table table-bordered table-hover table-responsive-sm">
             <thead>
                 <tr class="bg-primary">
                     <th>SrNo.</th>
@@ -41,14 +41,14 @@
                 <tr class="table-primary">
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= i %>
                         </a>
                     </td>
                     <td>
                         <span>
                             <a style="text-decoration: none; cursor: pointer; color: black;"
-                                href="/staff/staffData/view/<%= per.StaffID %>">
+                                href="staffData/view/<%= per.StaffID %>">
                                 <%= per.Fname %>
                                 <%= per.Mname %>
                                 <%= per.Lname %>
@@ -57,36 +57,36 @@
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= per.Qualification %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= per.Post %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= per.Gender %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= per.Address %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            href="staffData/view/<%= per.StaffID %>">
                             <%= per.PhoneNo %>
                         </a>
                     </td>
                     <td>
-                        <a href="/staff/staffData/edit/<%= per.StaffID %>">Edit</a>
+                        <a href="staffData/edit/<%= per.StaffID %>">Edit</a>
                     </td>
 
                 </tr>
