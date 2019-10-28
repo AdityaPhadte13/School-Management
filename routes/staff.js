@@ -17,18 +17,42 @@ router.post(
   [
     body("SearchText", "String Should Only Contain Numbers and Characters")
       .trim()
-      .custom(value => {
-        if (value) {
-          return true;
-        }
-        throw new Error("String Should Not Be Empty");
-      })
+      .optional({ checkFalsy: true })
       .isAlphanumeric()
   ],
   isAuth,
   isAdmin,
   staffController.postStaffData
 );
+
+router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);
+router.post(
+  "/teacherData",
+  [
+    body("SearchText", "String Should Only Contain Numbers and Characters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlphanumeric()
+  ],
+  isAuth,
+  isAdmin,
+  staffController.postTeacherData
+);
+
+router.get("/studentData", isAuth, isAdmin, staffController.getStudentData);
+router.post(
+  "/studentData",
+  [
+    body("SearchText", "String Should Only Contain Numbers and Characters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlphanumeric()
+  ],
+  isAuth,
+  isAdmin,
+  staffController.postStudentData
+);
+
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);
 

@@ -28,6 +28,7 @@
                     <th>SrNo.</th>
                     <th>Name</th>
                     <th>Qualification</th>
+                    <th>Post</th>
                     <th>Gender</th>
                     <th>Address</th>
                     <th>PhoneNo</th>
@@ -37,17 +38,17 @@
             <tbody>
                 <% var i = 1; %>
                 <% for (per of staff)  {%>
-                <tr class="table-primary" onclick="click(per.StaffID)">
+                <tr class="table-primary">
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/<%= per.StaffID %>">
+                            href="/staff/staffData/view/<%= per.StaffID %>">
                             <%= i %>
                         </a>
                     </td>
                     <td>
                         <span>
                             <a style="text-decoration: none; cursor: pointer; color: black;"
-                                href="/staff/staffData/<%= per.StaffID %>">
+                                href="/staff/staffData/view/<%= per.StaffID %>">
                                 <%= per.Fname %>
                                 <%= per.Mname %>
                                 <%= per.Lname %>
@@ -56,25 +57,31 @@
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/<%= per.StaffID %>">
+                            href="/staff/staffData/view/<%= per.StaffID %>">
                             <%= per.Qualification %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/<%= per.StaffID %>">
+                            href="/staff/staffData/view/<%= per.StaffID %>">
+                            <%= per.Post %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/staffData/view/<%= per.StaffID %>">
                             <%= per.Gender %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/<%= per.StaffID %>">
+                            href="/staff/staffData/view/<%= per.StaffID %>">
                             <%= per.Address %>
                         </a>
                     </td>
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
-                            href="/staff/staffData/<%= per.StaffID %>">
+                            href="/staff/staffData/view/<%= per.StaffID %>">
                             <%= per.PhoneNo %>
                         </a>
                     </td>

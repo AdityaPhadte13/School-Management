@@ -1,4 +1,7 @@
 const Staff = require("../models/staff");
+const Teacher = require("../models/teacher");
+const Student = require("../models/student");
+const SClass = require("../models/schoolClass");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
@@ -98,6 +101,7 @@ exports.postStaffNewPass = (req, res) => {
     .catch(err => console.log(err));
 };
 
+// StaffData Controllers Start
 exports.getStaffData = (req, res) => {
   Staff.FetchAll()
     .then(([staff]) => {
@@ -144,3 +148,122 @@ exports.postStaffData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+// StaffData Controllers End
+
+// TeacherData Controllers Start
+exports.getTeacherData = (req, res) => {
+  Teacher.FetchAll()
+    .then(([teacher]) => {
+      res.render("./teacher/teacher", {
+        pageTitle: "teacher Data",
+        path: "/staff/teacherData",
+        teacher: teacher,
+        input: "",
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postTeacherData = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return Teacher.FetchAll()
+      .then(([teacher]) => {
+        return res.status(422).render("./teacher/teacher", {
+          pageTitle: "teacher Data",
+          path: "/staff/teacherData",
+          teacher: teacher,
+          input: req.body.SearchText,
+          errorMessage: errors.array()[0],
+          validationErrors: errors.array()
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  Teacher.SearchByID(req.body.SearchText)
+    .then(([teacher]) => {
+      return res.render("./teacher/teacher", {
+        pageTitle: "teacher Data",
+        path: "/staff/teacherData",
+        teacher: teacher,
+        input: req.body.SearchText,
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+// TeacherData Controllers End
+
+// StudentData Controllers Start
+exports.getStudentData = (req, res) => {
+  Student.FetchAll()
+    .then(([student]) => {
+      return SClass.FetchAll().then(([sclass]) => {
+        return res.render("./student/student", {
+          pageTitle: "student Data",
+          path: "/staff/studentData",
+          student: student,
+          input: {
+            text: "",
+            option: ""
+          },
+          errorMessage: "",
+          validationErrors: [],
+          sclass: sclass
+        });
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postStudentData = (req, res) => {
+  const errors = validationResult(req);
+
+  console.log(req.body.Sclass);
+
+  if (!errors.isEmpty()) {
+    return Student.FetchAll()
+      .then(([student]) => {
+        return SClass.FetchAll().then(([sclass]) => {
+          return res.status(422).render("./student/student", {
+            pageTitle: "student Data",
+            path: "/staff/studentData",
+            student: student,
+            input: {
+              text: req.body.SearchText,
+              option: req.body.Sclass
+            },
+            errorMessage: errors.array()[0],
+            validationErrors: errors.array(),
+            sclass: sclass
+          });
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  Student.SearchByID(req.body.SearchText, req.body.Sclass)
+    .then(([student]) => {
+      return SClass.FetchAll().then(([sclass]) => {
+        return res.render("./student/student", {
+          pageTitle: "student Data",
+          path: "/staff/studentData",
+          student: student,
+          input: {
+            text: req.body.SearchText,
+            option: req.body.Sclass
+          },
+          errorMessage: "",
+          validationErrors: [],
+          sclass: sclass
+        });
+      });
+    })
+    .catch(err => console.log(err));
+};
+// StudentData Controllers End

@@ -1,0 +1,108 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/nav.ejs') %>
+    <main class="container pt-5">
+        <% if((validationErrors.length > 0)) {%>
+        <div class="alert alert-danger text-center" role="alert">
+            <%= errorMessage.msg %>
+        </div>
+        <% } %>
+        <div class="text-center">
+            <form class="form-inline" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only">Password</label>
+                    <input type="text"
+                        class="form-control <%= validationErrors.find(e => e.param === 'SearchText') ? 'is-invalid' : '' %>"
+                        name="SearchText" placeholder="Enter Name or ID" value="<%= input.text %>">
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <select class="custom-select" name="Sclass">
+                        <option name="Sclass" value="" <%= (input.option == '') ? 'selected' : '' %>>Select a Class
+                        </option>
+                        <% for (c of sclass) {%>
+                        <option name="Sclass" value="<%= c.ClassID %>"
+                            <%= (input.option == c.ClassID) ? 'selected' : '' %>>
+                            <%= c.STD + " - " + c.Division %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mx-sm-3 mb-2">Search</button>
+            </form>
+        </div>
+
+        <table style="width:100%" class="table table-bordered table-hover">
+            <thead>
+                <tr class="bg-primary">
+                    <th>SrNo.</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Roll No.</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                    <th>PhoneNo</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% var i = 1; %>
+                <% for (per of student)  {%>
+                <tr class="table-primary">
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= i %>
+                        </a>
+                    </td>
+                    <td>
+                        <span>
+                            <a style="text-decoration: none; cursor: pointer; color: black;"
+                                href="/staff/studentData/view/<%= per.StudID %>">
+                                <%= per.Fname %>
+                                <%= per.Mname %>
+                                <%= per.Lname %>
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= String(per.STD) + " - " + per.Division %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.RollNo %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.Gender %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.Address %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.PhoneNo %>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/staff/studentData/edit/<%= per.StudID %>">Edit</a>
+                    </td>
+
+                </tr>
+                <% i++; } %>
+            </tbody>
+        </table>
+    </main>
+    <%- include('../includes/end.ejs')%>
