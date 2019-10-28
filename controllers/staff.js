@@ -148,6 +148,14 @@ exports.postStaffData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+
+exports.getStaffDataAdd = (req, res) => {
+  res.render('./staff/form',{
+    pageTitle: "Staff Data Add",
+    path: "/staff/staffData/add",
+  })
+}
+
 exports.getStaffDataView = (req,res) => {
   res.render('./staff/card',{
     pageTitle: "Details",
