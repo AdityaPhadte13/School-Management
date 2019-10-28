@@ -24,6 +24,7 @@ router.post(
   isAdmin,
   staffController.postStaffData
 );
+router.get("/staffdata/view/:id",staffController.getStaffDataView);
 
 router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);
 router.post(
@@ -52,6 +53,8 @@ router.post(
   isAdmin,
   staffController.postStudentData
 );
+
+
 
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);

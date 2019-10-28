@@ -148,6 +148,12 @@ exports.postStaffData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+exports.getStaffDataView = (req,res) => {
+  res.render('./staff/card',{
+    pageTitle: "Details",
+    path: "/staffData/view"
+  })
+}
 // StaffData Controllers End
 
 // TeacherData Controllers Start
