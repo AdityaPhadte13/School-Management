@@ -39,6 +39,20 @@ router.post(
   staffController.postTeacherData
 );
 
+router.get("/studentData", isAuth, isAdmin, staffController.getStudentData);
+router.post(
+  "/studentData",
+  [
+    body("SearchText", "String Should Only Contain Numbers and Characters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlphanumeric()
+  ],
+  isAuth,
+  isAdmin,
+  staffController.postStudentData
+);
+
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);
 

@@ -1,5 +1,7 @@
 const Staff = require("../models/staff");
 const Teacher = require("../models/teacher");
+const Student = require("../models/student");
+const Class = require("../models/schoolClass");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 
@@ -99,6 +101,7 @@ exports.postStaffNewPass = (req, res) => {
     .catch(err => console.log(err));
 };
 
+// StaffData Controllers Start
 exports.getStaffData = (req, res) => {
   Staff.FetchAll()
     .then(([staff]) => {
@@ -145,13 +148,15 @@ exports.postStaffData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+// StaffData Controllers End
 
+// TeacherData Controllers Start
 exports.getTeacherData = (req, res) => {
   Teacher.FetchAll()
     .then(([teacher]) => {
       res.render("./teacher/teacher", {
         pageTitle: "teacher Data",
-        path: "/teacher/teacherData",
+        path: "/staff/teacherData",
         teacher: teacher,
         input: "",
         errorMessage: "",
@@ -192,3 +197,53 @@ exports.postTeacherData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+// TeacherData Controllers End
+
+// StudentData Controllers Start
+exports.getStudentData = (req, res) => {
+  Student.FetchAll()
+    .then(([student]) => {
+      res.render("./student/student", {
+        pageTitle: "student Data",
+        path: "/staff/studentData",
+        student: student,
+        input: "",
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.postStudentData = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return Student.FetchAll()
+      .then(([student]) => {
+        return res.status(422).render("./student/student", {
+          pageTitle: "student Data",
+          path: "/staff/studentData",
+          student: student,
+          input: req.body.SearchText,
+          errorMessage: errors.array()[0],
+          validationErrors: errors.array()
+        });
+      })
+      .catch(err => console.log(err));
+  }
+
+  Student.SearchByID(req.body.SearchText)
+    .then(([student]) => {
+      return res.render("./student/student", {
+        pageTitle: "student Data",
+        path: "/staff/studentData",
+        student: student,
+        input: req.body.SearchText,
+        errorMessage: "",
+        validationErrors: []
+      });
+    })
+    .catch(err => console.log(err));
+};
+// StudentData Controllers End

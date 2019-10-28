@@ -35,19 +35,20 @@ module.exports = class teacher {
 
   static FetchAll() {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo 
-      FROM student s, student_login_info l, student_phone_no p 
-      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
-      GROUP BY s.StudID;;`
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
+      FROM student s, student_login_info l, student_phone_no p,Class c 
+      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID AND c.ClassID = s.Class
+      GROUP BY s.StudID;`
     );
   }
 
   static FetchByID(Id) {
     return db.execute(
-      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo 
-      FROM student s, student_login_info l, student_phone_no p 
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
+      FROM student s, student_login_info l, student_phone_no p,Class c 
       WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
-      AND s.StudID = ? GROUP BY s.StudID;`,
+      AND c.ClassID = s.Class AND s.StudID = ?
+      GROUP BY s.StudID;`,
       [Id]
     );
   }
@@ -81,5 +82,21 @@ module.exports = class teacher {
       [Password, Id]
     );
   }
+
+  static SearchByID(Id, sClass = null) {
+    const S = String("%" + String(Id) + "%");
+    const S1 = String(Id);
+    const S2 = sClass !== null ? sClass : "";
+    return db.execute(
+      `SELECT s.*, l.Email, l.Username, l.Password, p.PhoneNo, c.STD, c.Division
+      FROM student s, student_login_info l, student_phone_no p,Class c 
+      WHERE s.StudID = l.StudentID AND s.StudID = p.StudentID 
+      AND c.ClassID = s.Class AND (s.StudID = ? OR s.RollNo = ? OR s.Fname LIKE ? OR s.Mname LIKE ? 
+      OR s.Lname LIKE ? OR s.Address LIKE ? OR s.Gender = ? OR s.Class = ?)
+      GROUP BY s.StudID;`,
+      [Number(Id), Number(Id), S, S, S, S, S1, S2]
+    );
+  }
+
   // Funtions For Insert Update And Delete records Here
 };

@@ -58,7 +58,13 @@
                     <td>
                         <a style="text-decoration: none; cursor: pointer; color: black;"
                             href="/staff/studentData/view/<%= per.StudID %>">
-                            <%= per.Qualification %>
+                            <%= String(per.STD) + " - " + per.Division %>
+                        </a>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.RollNo %>
                         </a>
                     </td>
                     <td>
