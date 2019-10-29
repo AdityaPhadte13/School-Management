@@ -10,32 +10,45 @@
             <div class="card-body">
                 <h5 class="card-title">Staff details</h5>
                     <h6>
-                        Fname:
+                        Fname: <%= staff.Fname %>
                         <br>
-                        Mname:
+                        Mname: <%= staff.Mname %>
                         <br>
-                        Lname:
+                        Lname:<%= staff.Lname %>
                     </h6>
                 
                     <h6>
-                        Qualification:
+                        Qualification:<%= staff.Qualification %>
                     </h6>
             
                     <h6>
-                        Post:
+                        Post:<%= staff.Post %>
                     </h6>
                
                     <h6>
-                        Gender:
+                        Gender:<%= staff.Gender %>
                     <h6>
               
                     <h6>
-                        Address:
+                        Address:<%= staff.Address %>
                     </h6>
-               
+                    <h6>PhoneNo:<%= staff.PhoneNo %></h6>
+                 
                     <h6>
-                        PhoneNo:
+                        Admin privileges:<%= staff.AdminPrivileges ? "yes":"no" %>
                     </h6>
+
+                    <h6>
+                        phoneno:<%= staff.PhoneNo %>
+                 </h6>
+                 <h6>
+                        login  username:<%= staff.Username %>
+                    </h6>
+                    <h6>
+                        email id:    <%= staff.Email %>
+                        </h6>
+        
+
                     <div class="text-center">
                     <a href="/staff/staffData/edit/>" class="btn btn-primary">Edit</a>
                     </div>        
