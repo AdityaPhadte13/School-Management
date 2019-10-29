@@ -149,19 +149,27 @@ exports.postStaffData = (req, res) => {
     .catch(err => console.log(err));
 };
 
+// Staff Data Add Controllers
 exports.getStaffDataAdd = (req, res) => {
-  res.render('./staff/form',{
+  res.render("./staff/form", {
     pageTitle: "Staff Data Add",
-    path: "/staff/staffData/add",
-  })
-}
+    path: "/staff/staffData/add"
+  });
+};
 
-exports.getStaffDataView = (req,res) => {
-  res.render('./staff/card',{
+exports.postStaffDataAdd = (req, res) => {
+  console.log(req.body);
+  res.redirect("/staff/staffData/add");
+};
+
+// Staff Data Add Controllers END
+
+exports.getStaffDataView = (req, res) => {
+  res.render("./staff/card", {
     pageTitle: "Details",
     path: "/staffData/view"
-  })
-}
+  });
+};
 // StaffData Controllers End
 
 // TeacherData Controllers Start

@@ -1,68 +1,110 @@
 <%- include('../includes/head.ejs') %>
 </head>
 
-<body>
+<body data-spy="scroll">
     <%- include('../includes/nav.ejs') %>
     <main class="container pt-5">
         <div class="container">
-            <form class="form" method="POST">
+            <div class="text-center">
+                <h1>
+                    Staff Add Form
+                </h1>
+            </div>
+            <form class="form" method="POST" novalidate>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="FirstName">First name</label>
+                    <div class="col-md-3 mb-3">
+                        <label for="FirstName">First name: </label>
                         <input type="text" class="form-control" id="FirstName" name="Fname" placeholder="First name"
                             value="" required>
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="MiddleName">Middle name</label>
+                    <div class="col-md-3 mb-3">
+                        <label for="MiddleName">Middle name: </label>
                         <input type="text" class="form-control" id="MiddleName" name="Mname" placeholder="Middle name"
                             value="" required>
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="LastName">Last name</label>
+                    <div class="col-md-3 mb-3">
+                        <label for="LastName">Last name: </label>
                         <input type="text" class="form-control" id="LastName" name="Lname" placeholder="Last name"
                             value="" required>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-4 mb-3">
-                        <label for="BirthDate">Birth Date</label>
-                        <input type="date" value="" id="BirthDate" name="BirthDate">
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                        <label for="JoinDate">Join Date</label>
-                        <input type="date" value="<%-  String((new Date).getFullYear() 
-                            + "-" + Number((new Date).getMonth()+1) 
-                            + "-" +(new Date).getDate()).trim() %>" id="JoinDate" name="JoinDate">
-
-                    </div>
+                <br>
+                <div class="">
+                    <label for="BirthDate">Birth Date:</label>
+                    <input type="date" value="" id="BirthDate" name="BirthDate" required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="Gender">Gender</label>
-                        <select id="Gender" class="form-control" name="Gender">
-                            <option name="Gender" selected>Male</option>
-                            <option name="Gender">Female</option>
-                            <option name="Gender">Other</option>
-                        </select>
-                    </div>
+                <br>
+                <div class="">
+                    <label for="JoinDate">Join Date: </label>
+                    <input type="date" value="<%-  String((new Date).getFullYear() 
+                            + "-" + Number((new Date).getMonth()+1) 
+                            + "-" +(new Date).getDate()).trim() %>" id="JoinDate" name="JoinDate" required>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="Qualification">Qualification</label>
+                </div>
+                <br>
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="Qualification">Qualification: </label>
                         <input type="text" class="form-control" id="Qualification" name="Qualification"
                             placeholder="Qualification" value="" required>
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label for="Salary">Salary</label>
+                    <div class="col-md-3 mb-3">
+                        <label for="Post">Post: </label>
+                        <input type="text" class="form-control" id="Post" name="Post" placeholder="Post" value=""
+                            required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="Salary">Salary: </label>
                         <input type="number" class="form-control" id="Salary" name="Salary" placeholder="Salary"
                             value="" required>
                     </div>
                 </div>
 
+                <div class="form-row">
+
+                    <div class="col-md-3 mb-3">
+                        <label for="PhoneNo1">Phone 1:</label>
+                        <input type="tel" class="form-control" id="PhoneNo1" name="PhoneNo1" placeholder="PhoneNo1"
+                            value="" required>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label for="PhoneNo2">Phone 2:</label>
+                        <input type="tel" class="form-control" id="PhoneNo2" name="PhoneNo2" placeholder="PhoneNo2"
+                            value="" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-md-5 mb-3">
+                        <label for="Email">Email address</label>
+                        <input type="email" class="form-control" id="Email" name="Email" placeholder="Enter email">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="Gender">Gender:</label>
+                        <select id="Gender" class="form-control" name="Gender" required>
+                            <option name="Gender" selected>Male</option>
+                            <option name="Gender">Female</option>
+                            <option name="Gender">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4 mr-auto">
+                        <label for="Address">Address:</label>
+                        <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3"
+                            required></textarea>
+                    </div>
+                </div>
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary mb-2">ADD</button>
