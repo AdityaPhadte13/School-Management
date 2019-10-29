@@ -69,13 +69,6 @@ exports.postStaffDataAdd = (req, res) => {
 // Staff Data Add Controllers END
 
 exports.getStaffDataView = (req, res) => {
-  res.render("./staff/card", {
-    pageTitle: "Details",
-    path: "/staffData/view"
-  });
-};
-
-exports.getStaffDataView = (req, res) => {
   Staff.FetchByID(req.params.id)
     .then(([staff]) => {
       if(staff.length === 0){
