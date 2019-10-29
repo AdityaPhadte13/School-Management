@@ -8,51 +8,109 @@
         <div class="card">
 
             <div class="card-body">
-                <h5 class="card-title">Staff details</h5>
-                    <h6>
-                        Fname: <%= staff.Fname %>
-                        <br>
-                        Mname: <%= staff.Mname %>
-                        <br>
-                        Lname:<%= staff.Lname %>
-                    </h6>
-                
-                    <h6>
-                        Qualification:<%= staff.Qualification %>
-                    </h6>
-            
-                    <h6>
-                        Post:<%= staff.Post %>
-                    </h6>
-               
-                    <h6>
-                        Gender:<%= staff.Gender %>
-                    <h6>
-              
-                    <h6>
-                        Address:<%= staff.Address %>
-                    </h6>
-                    <h6>PhoneNo:<%= staff.PhoneNo %></h6>
-                 
-                    <h6>
-                        Admin privileges:<%= staff.AdminPrivileges ? "yes":"no" %>
-                    </h6>
+                <form class="form">
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="FirstName">First name: </label>
+                            <input type="text" class="form-control" id="FirstName" name="Fname" placeholder="First name"
+                                value="<%= staff.Fname%>" readonly>
+                        </div>
 
-                    <h6>
-                        phoneno:<%= staff.PhoneNo %>
-                 </h6>
-                 <h6>
-                        login  username:<%= staff.Username %>
-                    </h6>
-                    <h6>
-                        email id:    <%= staff.Email %>
-                        </h6>
-        
+                        <div class="col-md-3 mb-3">
+                            <label for="MiddleName">Middle name: </label>
+                            <input type="text" class="form-control" id="MiddleName" name="Mname"
+                                placeholder="Middle name" value="<%= staff.Mname%>" readonly>
+                        </div>
 
-                    <div class="text-center">
-                    <a href="/staff/staffData/edit/>" class="btn btn-primary">Edit</a>
-                    </div>        
+                        <div class="col-md-3 mb-3">
+                            <label for="LastName">Last name: </label>
+                            <input type="text" class="form-control" id="LastName" name="Lname" placeholder="Last name"
+                                value="<%= staff.Lname%>" readonly>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="BirthDate">Birth Date:</label>
+                            <input type="text" class="form-control" value="<%-  (new Date(staff.BirthDate)).getDate() 
+                        + "-" + ((new Date(staff.BirthDate)).getMonth()+1) 
+                        + "-" +(new Date(staff.BirthDate)).getFullYear() %>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="JoinDate">Join Date: </label>
+                            <input type="text" class="form-control" value="<%-  (new Date(staff.JoinDate)).getDate() 
+                        + "-" + ((new Date(staff.JoinDate)).getMonth()+1) 
+                        + "-" +(new Date(staff.JoinDate)).getFullYear() %>" readonly>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="Qualification">Qualification: </label>
+                            <input type="text" class="form-control" id="Qualification" name="Qualification"
+                                placeholder="Qualification" value="<%= staff.Qualification%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="Post">Post: </label>
+                            <input type="text" class="form-control" id="Post" name="Post" placeholder="Post"
+                                value="<%= staff.Post%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="Salary">Salary: </label>
+                            <input type="number" class="form-control" id="Salary" name="Salary" placeholder="Salary"
+                                value="<%= staff.Salary%>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="col-md-3 mb-3">
+                            <label for="PhoneNo1">Phone 1:</label>
+                            <input type="tel" class="form-control" id="PhoneNo1" name="PhoneNo1" placeholder="PhoneNo1"
+                                value="<%= staff.PhoneNo%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="PhoneNo2">Phone 2:</label>
+                            <input type="tel" class="form-control" id="PhoneNo2" name="PhoneNo2" placeholder="PhoneNo2"
+                                value="" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-5 mb-3">
+                            <label for="Email">Email address</label>
+                            <input type="email" class="form-control" id="Email" name="Email" value="<%= staff.Email%>"
+                                readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="Gender">Gender:</label>
+                            <select id="Gender" class="form-control" name="Gender" aria-readonly="true" disabled>
+                                <option name="Gender" selected><%= staff.Gender%></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mr-auto">
+                            <label for="Address">Address:</label>
+                            <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3"
+                                readonly><%= staff.Address%></textarea>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="text-center">
+                    <a class="btn btn-primary mb-2" href="/staff/staffData/edit/<%= staff.StaffID %>">Edit</a>
                 </div>
-        </div>
+
+            </div>
     </main>
     <%- include('../includes/end.ejs')%>
