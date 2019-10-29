@@ -5,6 +5,9 @@ const Staff = require("../models/staff");
 
 const staffController = require("../controllers/staff");
 const schoolController = require("../controllers/school");
+const studentDataController = require("../controllers/studentData");
+const staffDataController = require("../controllers/staffData");
+const teacherDataController = require("../controllers/teacherData");
 const isAuth = require("../middleware/isAuthStaff");
 const isAdmin = require("../middleware/isAdmin");
 
@@ -13,7 +16,7 @@ const router = express.Router();
 router.get(["/", "/home"], isAuth, schoolController.getHome);
 
 //staff routers
-router.get("/staffData", isAuth, isAdmin, staffController.getStaffData);
+router.get("/staffData", isAuth, isAdmin, staffDataController.getStaffData);
 router.post(
   "/staffData",
   [
@@ -24,15 +27,15 @@ router.post(
   ],
   isAuth,
   isAdmin,
-  staffController.postStaffData
+  staffDataController.postStaffData
 );
-router.get("/staffData/add", staffController.getStaffDataAdd);
-router.post("/staffData/add", staffController.postStaffDataAdd);
+router.get("/staffData/add", staffDataController.getStaffDataAdd);
+router.post("/staffData/add", staffDataController.postStaffDataAdd);
 
-router.get("/staffdata/view/:id", staffController.getStaffDataView);
+router.get("/staffdata/view/:id", staffDataController.getStaffDataView);
 
 //teacher routers
-router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);
+router.get("/teacherData", isAuth, isAdmin, teacherDataController.getTeacherData);
 router.post(
   "/teacherData",
   [
@@ -43,12 +46,12 @@ router.post(
   ],
   isAuth,
   isAdmin,
-  staffController.postTeacherData
+  teacherDataController.postTeacherData
 );
-router.get("/teacherdata/view/:id",staffController.getTeacherDataView);
-router.get("/teacherData/add", staffController.getTeacherDataAdd)
+router.get("/teacherdata/view/:id", teacherDataController.getTeacherDataView);
+router.get("/teacherData/add", teacherDataController.getTeacherDataAdd);
 //student routers
-router.get("/studentData", isAuth, isAdmin, staffController.getStudentData);
+router.get("/studentData", isAuth, isAdmin, studentDataController.getStudentData);
 router.post(
   "/studentData",
   [
@@ -59,11 +62,11 @@ router.post(
   ],
   isAuth,
   isAdmin,
-  staffController.postStudentData
+  studentDataController.postStudentData
 );
 
-router.get("/studentdata/view/:id",staffController.getStudentDataView);
-router.get("/studentData/add", staffController.getStudentDataAdd);
+router.get("/studentdata/view/:id", studentDataController.getStudentDataView);
+router.get("/studentData/add", studentDataController.getStudentDataAdd);
 //school routers
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);
