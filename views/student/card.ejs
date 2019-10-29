@@ -5,16 +5,98 @@
     <%- include('../includes/nav.ejs') %>
     <main class="container">
         <h1><%= pageTitle %> </h1>
-        <%= per.Fname %>
+
         <div class="card">
 
             <div class="card-body">
                 <h5 class="card-title">student details</h5>
-            
-                    <div class="text-center">
+                <form>
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="FirstName">First name: </label>
+                            <input type="text" class="form-control" id="FirstName" name="Fname" placeholder="First name"
+                                value="<%= per.Fname%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="MiddleName">Middle name: </label>
+                            <input type="text" class="form-control" id="MiddleName" name="Mname"
+                                placeholder="Middle name" value="<%= per.Mname%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="LastName">Last name: </label>
+                            <input type="text" class="form-control" id="LastName" name="Lname" placeholder="Last name"
+                                value="<%= per.Lname%>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3">
+                            <label for="BirthDate">Birth Date:</label>
+                            <input type="text" class="form-control" value="<%-  (new Date(per.BirthDate)).getDate() 
+                        + "-" + ((new Date(per.BirthDate)).getMonth()+1) 
+                        + "-" +(new Date(per.BirthDate)).getFullYear() %>" readonly></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="Class">Class:</label>
+                            <select id="Class" class="form-control" name="Class" disabled>
+                                <option name="Class" selected><%= per.Class%></option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="RollNo">RollNo: </label>
+                            <input type="number" min="0" step="1" class="form-control" id="RollNo" name="RollNo"
+                                placeholder="RollNo" value="<%= per.RollNo%>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="col-md-3 mb-3">
+                            <label for="PhoneNo1">Phone 1:</label>
+                            <input type="tel" class="form-control" id="PhoneNo1" name="PhoneNo1" placeholder="PhoneNo1"
+                                value="<%= per.PhoneNo%>" readonly>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="PhoneNo2">Phone 2:</label>
+                            <input type="tel" class="form-control" id="PhoneNo2" name="PhoneNo2" placeholder="PhoneNo2"
+                                value="<%= phone %>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-5 mb-3">
+                            <label for="Email">Email address</label>
+                            <input type="email" class="form-control" id="Email" name="Email" value="<%= per.Email%>" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="Gender">Gender:</label>
+                            <select id="Gender" class="form-control" name="Gender" disabled>
+                                <option name="Gender" selected><%= per.Gender%></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mr-auto">
+                            <label for="Address">Address:</label>
+                            <textarea class="form-control" id="Address" placeholder="Address" name="Address" rows="3"
+                                readonly><%= per.Address%></textarea>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="text-center">
                     <a href="/staff/staffData/edit/>" class="btn btn-primary">Edit</a>
-                    </div>        
                 </div>
+            </div>
         </div>
     </main>
     <%- include('../includes/end.ejs')%>

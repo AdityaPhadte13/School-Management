@@ -109,5 +109,12 @@ module.exports = class teacher {
     }
   }
 
+  static FetchPhone(Id, PhoneNo) {
+    return db.execute(
+      `SELECT p.PhoneNo FROM student_phone_no p WHERE p.StudentID = ? AND p.PhoneNo != ? `,
+      [Id, PhoneNo]
+    );
+  }
+
   // Funtions For Insert Update And Delete records Here
 };
