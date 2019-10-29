@@ -50,6 +50,7 @@ router.post(
 );
 router.get("/teacherdata/view/:id", teacherDataController.getTeacherDataView);
 router.get("/teacherData/add", teacherDataController.getTeacherDataAdd);
+
 //student routers
 router.get("/studentData", isAuth, isAdmin, studentDataController.getStudentData);
 router.post(
@@ -67,6 +68,7 @@ router.post(
 
 router.get("/studentdata/view/:id", studentDataController.getStudentDataView);
 router.get("/studentData/add", studentDataController.getStudentDataAdd);
+
 //school routers
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);

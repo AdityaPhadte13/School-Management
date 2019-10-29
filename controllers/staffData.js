@@ -57,7 +57,23 @@ exports.postStaffData = (req, res) => {
 exports.getStaffDataAdd = (req, res) => {
   res.render("./staff/form", {
     pageTitle: "Staff Data Add",
-    path: "/staff/staffData/add"
+    path: "/staff/staffData/add",
+    staff: {
+      Fname: "as",
+      Mname: "sdfgggd",
+      Lname: "sdfgdsa",
+      BirthDate: "1999-08-05",
+      JoinDate: "2019-10-29",
+      Qualification: "fgbfkbh ",
+      Post: "fkj vfdkhf v",
+      Salary: "233",
+      PhoneNo1: "12345",
+      PhoneNo2: "12345",
+      Email: "asd@sfd.desfgh",
+      Gender: "Male",
+      Address: "ghjvhcbjvjhvshsdbcjvcjvd",
+      AdminPrivileges: "on"
+    }
   });
 };
 
@@ -71,7 +87,7 @@ exports.postStaffDataAdd = (req, res) => {
 exports.getStaffDataView = (req, res) => {
   Staff.FetchByID(req.params.id)
     .then(([staff]) => {
-      if(staff.length === 0){
+      if (staff.length === 0) {
         res.status(404).render("error", {
           pageTitle: "Page Not Found",
           path: "",
