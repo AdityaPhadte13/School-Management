@@ -26,8 +26,10 @@ router.post(
   isAdmin,
   staffController.postStaffData
 );
-router.get("/staffData/add", staffController.getStaffDataAdd)
-router.get("/staffdata/view/:id",staffController.getStaffDataView);
+router.get("/staffData/add", staffController.getStaffDataAdd);
+router.post("/staffData/add", staffController.postStaffDataAdd);
+
+router.get("/staffdata/view/:id", staffController.getStaffDataView);
 
 //teacher routers
 router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);

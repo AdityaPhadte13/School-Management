@@ -12,13 +12,14 @@
         <div class="row" style="display: flex;">
             <form class="form-inline" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="form-group mx-sm-3 mb-2">
-                    <label for="inputPassword2" class="sr-only">Password</label>
+                <div class="input-group mb-3 mb-2 ml-3">
                     <input type="text"
                         class="form-control <%= validationErrors.find(e => e.param === 'SearchText') ? 'is-invalid' : '' %>"
                         name="SearchText" placeholder="Enter Name or ID" value="<%= input %>">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary mb-2">Search</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
             </form>
             <div class="ml-auto mr-4"> <a href="staffData/add" class="btn btn-primary mb-2">Add Staff</a></div>
         </div>
