@@ -95,5 +95,12 @@ module.exports = class staff {
     );
   }
 
+  static FetchPhone(Id, PhoneNo) {
+    return db.execute(
+      `SELECT p.PhoneNo FROM staff_phone_no p WHERE p.StaffID = ? AND p.PhoneNo != ?`,
+      [Id, PhoneNo]
+    );
+  }
+
   // Funtions For Insert Update And Delete records Here
 };
