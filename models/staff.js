@@ -37,6 +37,89 @@ module.exports = class staff {
     this.PhoneNo = [].concat(PhoneNo);
   }
 
+  save() {
+    console.log(this);
+    return this.insertStaff().then(() => {
+      return this.insertStaffPost().then(() => {
+        return this.insertStaffLogin().then(() => {
+          return this.insertStaffPhone();
+        });
+      });
+    });
+  }
+
+  insertStaff() {
+    return db.execute(
+      `INSERT INTO staff( Fname, Mname, Lname, BirthDate, JoinDate, Gender, Qualification, Address, Salary) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        this.Fname,
+        this.Mname,
+        this.Lname,
+        this.BirthDate,
+        this.JoinDate,
+        this.Gender,
+        this.Qualification,
+        this.Address,
+        this.Salary
+      ]
+    );
+  }
+
+  insertStaffPost() {
+    return db
+      .execute(`SELECT max(StaffID) as "StaffID" FROM staff`)
+      .then(([row]) => {
+        this.StaffID = row[0].StaffID;
+        return db.execute(
+          `INSERT INTO non_teaching(StaffID, Post) VALUES (?, ?)`,
+          [this.StaffID, this.Post]
+        );
+      });
+  }
+
+  insertStaffLogin() {
+    this.Username = this.Fname.toLowerCase() + String(this.StaffID);
+    this.Password =
+      this.Fname.toLowerCase() + new Date(this.BirthDate).getFullYear();
+    this.AdminPrivileges =
+      this.AdminPrivileges === "on" || this.AdminPrivileges == "1"
+        ? true
+        : false;
+    return db.execute(
+      `INSERT INTO non_teaching_login_info(StaffID, Email, Username, Password, AdminPrivileges) 
+    VALUES (?, ?, ?, ?, ?)`,
+      [
+        this.StaffID,
+        this.Email,
+        this.Username,
+        this.Password,
+        this.AdminPrivileges
+      ]
+    );
+  }
+
+  insertStaffPhone() {
+    if (this.PhoneNo[1] !== "") {
+      return db
+        .execute("INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)", [
+          this.StaffID,
+          this.PhoneNo[0]
+        ])
+        .then(([row]) => {
+          return db.execute(
+            "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+            [this.StaffID, this.PhoneNo[1]]
+          );
+        });
+    } else {
+      return db.execute(
+        "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+        [this.StaffID, this.PhoneNo[0]]
+      );
+    }
+  }
+
   static FetchAll() {
     return db.execute(
       `SELECT s.*, n.Post, l.Email, l.Username, l.Password, l.AdminPrivileges, p.PhoneNo 

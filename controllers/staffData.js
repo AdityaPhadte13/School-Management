@@ -58,28 +58,48 @@ exports.getStaffDataAdd = (req, res) => {
   res.render("./staff/form", {
     pageTitle: "Staff Data Add",
     path: "/staff/staffData/add",
-    staff: {
-      Fname: "as",
-      Mname: "sdfgggd",
-      Lname: "sdfgdsa",
-      BirthDate: "1999-08-05",
-      JoinDate: "2019-10-29",
-      Qualification: "fgbfkbh ",
-      Post: "fkj vfdkhf v",
-      Salary: "233",
-      PhoneNo1: "12345",
-      PhoneNo2: "12345",
-      Email: "asd@sfd.desfgh",
-      Gender: "Male",
-      Address: "ghjvhcbjvjhvshsdbcjvcjvd",
-      AdminPrivileges: "on"
-    }
+    staff: {},
+    errorMessage: "",
+    validationErrors: []
   });
 };
 
 exports.postStaffDataAdd = (req, res) => {
-  console.log(req.body);
-  res.redirect("/staff/staffData/add");
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    return res.status(422).render("./staff/form", {
+      pageTitle: "Staff Data Add",
+      path: "/staff/staffData/add",
+      staff: req.body,
+      errorMessage: errors.array()[0].msg,
+      validationErrors: errors.array()
+    });
+  }
+  staffobj = new Staff(
+    0,
+    req.body.Fname,
+    req.body.Mname,
+    req.body.Lname,
+    req.body.BirthDate,
+    req.body.JoinDate,
+    req.body.Gender,
+    req.body.Qualification,
+    req.body.Address,
+    req.body.Salary,
+    req.body.Post,
+    req.body.Email,
+    "",
+    "",
+    req.body.AdminPrivileges,
+    [req.body.PhoneNo1, req.body.PhoneNo2]
+  );
+  staffobj
+    .save()
+    .then(() => {
+      return res.redirect("/staff/staffData/view/" + staffobj.StaffID);
+    })
+    .catch(err => console.log(err));
 };
 
 // Staff Data Add Controllers END
@@ -97,6 +117,9 @@ exports.getStaffDataView = (req, res) => {
       }
       return Staff.FetchPhone(staff[0].StaffID, staff[0].PhoneNo).then(
         ([phone2]) => {
+          if (phone2.length === 0) {
+            phone2.push({ PhoneNo: "" });
+          }
           return res.render("./staff/card", {
             pageTitle: "Details",
             path: "/staffData/view",
