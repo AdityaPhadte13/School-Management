@@ -12,6 +12,7 @@ const router = express.Router();
 
 router.get(["/", "/home"], isAuth, schoolController.getHome);
 
+//staff routers
 router.get("/staffData", isAuth, isAdmin, staffController.getStaffData);
 router.post(
   "/staffData",
@@ -30,6 +31,7 @@ router.post("/staffData/add", staffController.postStaffDataAdd);
 
 router.get("/staffdata/view/:id", staffController.getStaffDataView);
 
+//teacher routers
 router.get("/teacherData", isAuth, isAdmin, staffController.getTeacherData);
 router.post(
   "/teacherData",
@@ -43,7 +45,9 @@ router.post(
   isAdmin,
   staffController.postTeacherData
 );
-
+router.get("/teacherdata/view/:id",staffController.getTeacherDataView);
+router.get("/teacherData/add", staffController.getTeacherDataAdd)
+//student routers
 router.get("/studentData", isAuth, isAdmin, staffController.getStudentData);
 router.post(
   "/studentData",
@@ -58,6 +62,9 @@ router.post(
   staffController.postStudentData
 );
 
+router.get("/studentdata/view/:id",staffController.getStudentDataView);
+router.get("/studentData/add", staffController.getStudentDataAdd);
+//school routers
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);
 

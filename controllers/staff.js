@@ -169,6 +169,18 @@ exports.getStaffDataView = (req, res) => {
     pageTitle: "Details",
     path: "/staffData/view"
   });
+}
+
+exports.getStaffDataView = (req, res) => {
+  Staff.FetchByID(req.params.id)
+    .then(([staff]) => {
+      return res.render("./staff/card", {
+        pageTitle: "Details",
+        path: "/staffData/view",
+        staff: staff[0]
+      });
+    })
+    .catch(err => console.log(err));
 };
 // StaffData Controllers End
 
@@ -219,6 +231,25 @@ exports.postTeacherData = (req, res) => {
     })
     .catch(err => console.log(err));
 };
+
+exports.getTeacherDataView = (req, res) => {
+  Teacher.FetchByID(req.params.id)
+    .then(([teacher]) => {
+      return res.render("./teacher/card", {
+        pageTitle: "Details",
+        path: "/staffData/view",
+        per: teacher[0]
+      });
+    })
+    .catch(err => console.log(err));
+};
+exports.getTeacherDataAdd = (req, res) => {
+  res.render("./teacher/form", {
+    pageTitle: "Add Teacher",
+    path: "/staff/teacherData/add"
+  });
+};
+
 // TeacherData Controllers End
 
 // StudentData Controllers Start
@@ -287,5 +318,24 @@ exports.postStudentData = (req, res) => {
       });
     })
     .catch(err => console.log(err));
+};
+
+exports.getStudentDataView = (req, res) => {
+  Student.FetchByID(req.params.id)
+    .then(([student]) => {
+      return res.render("./student/card", {
+        pageTitle: "Details",
+        path: "/staffData/view",
+        per: student[0]
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+exports.getStudentDataAdd = (req, res) => {
+  res.render("./student/form", {
+    pageTitle: "Add student",
+    path: "/staff/studentData/add"
+  });
 };
 // StudentData Controllers End
