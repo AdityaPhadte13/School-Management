@@ -10,7 +10,7 @@
                     Staff Add Form
                 </h1>
             </div>
-            <form class="form" method="POST" novalidate>
+            <form class="form" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
@@ -31,20 +31,18 @@
                             value="" required>
                     </div>
                 </div>
-                <br>
-                <div class="">
-                    <label for="BirthDate">Birth Date:</label>
-                    <input type="date" value="" id="BirthDate" name="BirthDate" required>
+                <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="BirthDate">Birth Date:</label>
+                        <input type="date" class="form-control" value="" id="BirthDate" name="BirthDate" required>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="JoinDate">Join Date: </label>
+                        <input type="date" class="form-control" value="<%-  String((new Date).getFullYear() 
+                                + "-" + Number((new Date).getMonth()+1) 
+                                + "-" +(new Date).getDate()).trim() %>" id="JoinDate" name="JoinDate" required>
+                    </div>
                 </div>
-                <br>
-                <div class="">
-                    <label for="JoinDate">Join Date: </label>
-                    <input type="date" value="<%-  String((new Date).getFullYear() 
-                            + "-" + Number((new Date).getMonth()+1) 
-                            + "-" +(new Date).getDate()).trim() %>" id="JoinDate" name="JoinDate" required>
-
-                </div>
-                <br>
                 <div class="form-row">
                     <div class="col-md-3 mb-3">
                         <label for="Qualification">Qualification: </label>
@@ -60,8 +58,8 @@
 
                     <div class="col-md-3 mb-3">
                         <label for="Salary">Salary: </label>
-                        <input type="number" class="form-control" id="Salary" name="Salary" placeholder="Salary"
-                            value="" required>
+                        <input type="number" min="0" step="1" class="form-control" id="Salary" name="Salary"
+                            placeholder="Salary" value="" required>
                     </div>
                 </div>
 
@@ -105,6 +103,15 @@
                             required></textarea>
                     </div>
                 </div>
+
+                <div class="form-row">
+                    <div class="pr-1 pt-0 mt-0">Admin Privileges:</div>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="AdminPrivileges" name="AdminPrivileges">
+                        <label class="custom-control-label" for="AdminPrivileges"></label>
+                    </div>
+                </div>
+
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary mb-2">ADD</button>

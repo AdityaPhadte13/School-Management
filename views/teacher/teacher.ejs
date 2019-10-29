@@ -9,10 +9,10 @@
             <%= errorMessage.msg %>
         </div>
         <% } %>
-        <div class="text-center">
+        <div class="row">
             <form class="form-inline" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="input-group mb-2 ml-1">
+                <div class="input-group mb-2 ml-3">
                     <input type="text"
                         class="form-control <%= validationErrors.find(e => e.param === 'SearchText') ? 'is-invalid' : '' %>"
                         name="SearchText" placeholder="Enter Name or ID" value="<%= input %>">
@@ -21,9 +21,10 @@
                     </div>
                 </div>
             </form>
+            <div class="ml-auto mr-3"> <a href="teacherData/add" class="btn btn-primary mb-2">Add Teacher</a></div>
         </div>
 
-        <table style="width:100%" class="table table-bordered table-hover">
+        <table style="width:100%" class="table table-bordered table-hover table-responsive-sm">
             <thead>
                 <tr class="bg-primary">
                     <th>SrNo.</th>
