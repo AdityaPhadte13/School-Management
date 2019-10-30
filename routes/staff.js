@@ -69,7 +69,13 @@ router.post(
     body("PhoneNo2", "Invalid Phone Number")
       .trim()
       .optional({ checkFalsy: true })
-      .isDecimal(),
+      .isDecimal()
+      .custom((value, { req }) => {
+        if (value === req.body.PhoneNo1) {
+          throw new Error("Both Phone Numbers Cannot Be Same");
+        }
+        return true;
+      }),
     body("Email", "Email is Not Valid")
       .trim()
       .normalizeEmail()
@@ -134,7 +140,12 @@ router.post(
     body("PhoneNo2", "Invalid Phone Number")
       .trim()
       .optional({ checkFalsy: true })
-      .isDecimal(),
+      .isDecimal().custom((value, { req }) => {
+        if (value === req.body.PhoneNo1) {
+          throw new Error("Both Phone Numbers Cannot Be Same");
+        }
+        return true;
+      }),
     body("Email", "Email is Not Valid")
       .trim()
       .normalizeEmail()
