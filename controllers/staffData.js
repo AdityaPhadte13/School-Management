@@ -185,8 +185,9 @@ exports.postStaffDataEdit = (req, res) => {
 // Staff Data Edit Controllers End
 
 exports.postStaffDataPass = (req, res) => {
-  Staff.ResetPass(req.body.StaffID).catch(err => console.log(err));
-  return res.redirect("/staff/staffData");
+  Staff.ResetPass(req.body.StaffID).then(() => {
+    return res.redirect("/staff/staffData");
+  }).catch(err => console.log(err));
 };
 
 exports.postStaffDataDel = (req, res) => {
