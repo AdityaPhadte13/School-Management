@@ -1,4 +1,5 @@
 const db = require("../util/database");
+const bcrypt = require("bcryptjs");
 
 module.exports = class staff {
   constructor(
@@ -36,6 +37,8 @@ module.exports = class staff {
     this.AdminPrivileges = AdminPrivileges;
     this.PhoneNo = [].concat(PhoneNo);
   }
+
+  // INSERT QUERIES START
 
   save() {
     console.log(this);
@@ -78,7 +81,7 @@ module.exports = class staff {
       });
   }
 
-  insertStaffLogin() {
+  async insertStaffLogin() {
     this.Username = this.Fname.toLowerCase() + String(this.StaffID);
     this.Password =
       this.Fname.toLowerCase() + new Date(this.BirthDate).getFullYear();
@@ -86,16 +89,11 @@ module.exports = class staff {
       this.AdminPrivileges === "on" || this.AdminPrivileges == "1"
         ? true
         : false;
+    const Password = await bcrypt.hash(this.Password, 10);
     return db.execute(
       `INSERT INTO non_teaching_login_info(StaffID, Email, Username, Password, AdminPrivileges) 
-    VALUES (?, ?, ?, ?, ?)`,
-      [
-        this.StaffID,
-        this.Email,
-        this.Username,
-        this.Password,
-        this.AdminPrivileges
-      ]
+      VALUES (?, ?, ?, ?, ?)`,
+      [this.StaffID, this.Email, this.Username, Password, this.AdminPrivileges]
     );
   }
 
@@ -118,6 +116,52 @@ module.exports = class staff {
         [this.StaffID, this.PhoneNo[0]]
       );
     }
+  }
+
+  // INSERT QUERIES END
+
+  static ResetPass(id) {
+    return this.FetchByID(id).then(([staff]) => {
+      if (staff.length === 0) {
+        return;
+      }
+      const Password =
+        staff[0].Fname.toLowerCase() +
+        new Date(staff[0].BirthDate).getFullYear();
+      return db.execute(
+        "UPDATE `non_teaching_login_info` SET  non_teaching_login_info.Password = ? WHERE StaffID = ?",
+        [Password, id]
+      );
+    });
+  }
+
+  static Delete(id) {
+    return db.execute(`DELETE FROM staff WHERE StaffID = ?`, [id]);
+  }
+
+  static UpdatePhone(StaffID, PhoneNo1, PhoneNo2) {
+    return db
+      .execute(`DELETE FROM staff_phone_no WHERE StaffID = ?`, [StaffID])
+      .then(() => {
+        if (PhoneNo2 !== "") {
+          return db
+            .execute(
+              "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+              [StaffID, PhoneNo1]
+            )
+            .then(([row]) => {
+              return db.execute(
+                "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+                [StaffID, PhoneNo2]
+              );
+            });
+        } else {
+          return db.execute(
+            "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+            [StaffID, PhoneNo1]
+          );
+        }
+      });
   }
 
   static FetchAll() {

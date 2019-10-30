@@ -94,6 +94,13 @@ router.post(
 );
 
 router.get(
+  "/staffdata/edit/:id",
+  isAuth,
+  isAdmin,
+  staffDataController.getStaffDataEdit
+);
+
+router.get(
   "/staffdata/view/:id",
   isAuth,
   isAdmin,

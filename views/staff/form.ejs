@@ -14,10 +14,73 @@
             <%= errorMessage %>
         </div>
         <% } %>
+        <% if (path.includes("edit")) {%>
+        <div class="form-row ml-auto">
+            <button type="button" class="btn btn-primary ml-auto" data-toggle="modal" data-target="#ResetModal">
+                Reset Password
+            </button>
+            <div class="modal fade" id="ResetModal" tabindex="-1" role="dialog" aria-labelledby="ResetModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ResetModalLabel">Reset Password</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are You Sure?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <form class="form-inline" action="/staff/staffData/resetPass" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="StaffID" value="<%= staff.StaffID %>">
+                                <button type="submit" class="btn btn-primary">
+                                    Reset Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger ml-2" data-toggle="modal" data-target="#Delete">
+                Delete
+            </button>
+            <div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="DeleteLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="DeleteLabel">Delete Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Are You Sure? Changes Cannot be Reverted
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <form class="form-inline ml-2" action="/staff/staffData/Delete" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="StaffID" value="<%= staff.StaffID %>">
+                                <button type="submit" class="btn btn-danger">
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%  } %>
         <div class="container">
             <div class="text-center">
                 <h1>
-                    Staff Add Form
+
+                    Staff <%= path.includes('edit') ? " Data Edit " : "Add " %> Form
                 </h1>
             </div>
             <form class="form" method="POST">
@@ -139,7 +202,8 @@
 
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary mb-2">ADD</button>
+                    <button type="submit"
+                        class="btn btn-primary mb-2"><%= path.includes("edit") ? "Update" : "ADD" %></button>
                 </div>
             </form>
         </div>
