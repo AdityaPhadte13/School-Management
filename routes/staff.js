@@ -29,13 +29,174 @@ router.post(
   isAdmin,
   staffDataController.postStaffData
 );
-router.get("/staffData/add", staffDataController.getStaffDataAdd);
-router.post("/staffData/add", staffDataController.postStaffDataAdd);
+router.get(
+  "/staffData/add",
+  isAuth,
+  isAdmin,
+  staffDataController.getStaffDataAdd
+);
+router.post(
+  "/staffData/add",
+  [
+    body("Fname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Mname", "Name Should Conatain only Letters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlpha(),
+    body("Lname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Qualification", "Qualification Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Post", "Post Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Salary", "Salary Should Contain only Numbers")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo1", "Invalid Phone Number")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo2", "Invalid Phone Number")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isDecimal()
+      .custom((value, { req }) => {
+        if (value === req.body.PhoneNo1) {
+          throw new Error("Both Phone Numbers Cannot Be Same");
+        }
+        return true;
+      }),
+    body("Email", "Email is Not Valid")
+      .trim()
+      .normalizeEmail()
+      .optional({ checkFalsy: true })
+      .isEmail()
+      .custom(value => {
+        return Staff.FetchByLogin(value).then(([row]) => {
+          if (row.length > 0) {
+            return Promise.reject("Email is Already in Use");
+          }
+        });
+      }),
+    body("Address")
+      .escape()
+      .isString()
+      .isLength({ min: 6 })
+      .withMessage("Address is Too Short")
+  ],
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataAdd
+);
 
-router.get("/staffdata/view/:id", staffDataController.getStaffDataView);
+router.get(
+  "/staffdata/edit/:id",
+  isAuth,
+  isAdmin,
+  staffDataController.getStaffDataEdit
+);
+
+router.post(
+  "/staffData/edit/:id",
+  [
+    body("Fname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Mname", "Name Should Conatain only Letters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlpha(),
+    body("Lname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Qualification", "Qualification Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Post", "Post Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Salary", "Salary Should Contain only Numbers")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo1", "Invalid Phone Number")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo2", "Invalid Phone Number")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isDecimal().custom((value, { req }) => {
+        if (value === req.body.PhoneNo1) {
+          throw new Error("Both Phone Numbers Cannot Be Same");
+        }
+        return true;
+      }),
+    body("Email", "Email is Not Valid")
+      .trim()
+      .normalizeEmail()
+      .optional({ checkFalsy: true })
+      .isEmail()
+      .custom((value, { req }) => {
+        return Staff.FetchByLogin(value).then(([row]) => {
+          if (row.length > 0 && req.params.id != row[0].StaffID) {
+            return Promise.reject("Email is Already in Use");
+          }
+        });
+      }),
+    body("Address")
+      .escape()
+      .isString()
+      .isLength({ min: 6 })
+      .withMessage("Address is Too Short")
+  ],
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataEdit
+);
+
+router.post(
+  "/staffData/resetPass",
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataPass
+);
+
+router.post(
+  "/staffData/delete",
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataDel
+);
+
+router.get(
+  "/staffdata/view/:id",
+  isAuth,
+  isAdmin,
+  staffDataController.getStaffDataView
+);
 
 //teacher routers
-router.get("/teacherData", isAuth, isAdmin, teacherDataController.getTeacherData);
+router.get(
+  "/teacherData",
+  isAuth,
+  isAdmin,
+  teacherDataController.getTeacherData
+);
 router.post(
   "/teacherData",
   [
@@ -48,10 +209,26 @@ router.post(
   isAdmin,
   teacherDataController.postTeacherData
 );
-router.get("/teacherdata/view/:id", teacherDataController.getTeacherDataView);
-router.get("/teacherData/add", teacherDataController.getTeacherDataAdd);
+router.get(
+  "/teacherdata/view/:id",
+  isAuth,
+  isAdmin,
+  teacherDataController.getTeacherDataView
+);
+router.get(
+  "/teacherData/add",
+  isAuth,
+  isAdmin,
+  teacherDataController.getTeacherDataAdd
+);
+
 //student routers
-router.get("/studentData", isAuth, isAdmin, studentDataController.getStudentData);
+router.get(
+  "/studentData",
+  isAuth,
+  isAdmin,
+  studentDataController.getStudentData
+);
 router.post(
   "/studentData",
   [
@@ -65,8 +242,19 @@ router.post(
   studentDataController.postStudentData
 );
 
-router.get("/studentdata/view/:id", studentDataController.getStudentDataView);
-router.get("/studentData/add", studentDataController.getStudentDataAdd);
+router.get(
+  "/studentdata/view/:id",
+  isAuth,
+  isAdmin,
+  studentDataController.getStudentDataView
+);
+router.get(
+  "/studentData/add",
+  isAuth,
+  isAdmin,
+  studentDataController.getStudentDataAdd
+);
+
 //school routers
 router.get("/about", isAuth, schoolController.getAbout);
 router.get("/contact", isAuth, schoolController.getContact);

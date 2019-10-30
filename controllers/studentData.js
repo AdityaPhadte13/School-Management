@@ -86,6 +86,9 @@ exports.getStudentDataView = (req, res) => {
       }
       return Student.FetchPhone(req.params.id, student[0].PhoneNo).then(
         ([phone]) => {
+          if (phone.length === 0) {
+            phone.push({ PhoneNo: "" });
+          }
           return res.render("./student/card", {
             pageTitle: "Details",
             path: "/studentData/view",

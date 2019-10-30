@@ -1,4 +1,5 @@
 const notice = require("../models/notice");
+
 exports.getHome = (req, res) => {
   pageTitle = req.url.includes("student")
     ? "Student HomePage"

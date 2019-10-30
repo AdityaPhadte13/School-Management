@@ -64,16 +64,19 @@ exports.getTeacherDataView = (req, res) => {
           errDescription: "Page Not Found"
         });
       }
-      return Staff
-        .FetchPhone(req.params.id, teacher[0].PhoneNo)
-        .then(([phone]) => {
+      return Staff.FetchPhone(req.params.id, teacher[0].PhoneNo).then(
+        ([phone]) => {
+          if (phone.length === 0) {
+            phone.push({ PhoneNo: "" });
+          }
           return res.render("./teacher/card", {
             pageTitle: "Details",
             path: "/teacherData/view",
             staff: teacher[0],
             phone: phone[0].PhoneNo
           });
-        });
+        }
+      );
     })
     .catch(err => console.log(err));
 };
