@@ -5,6 +5,7 @@ const Teacher = require("../models/teacher");
 
 const teacherController = require("../controllers/teacher");
 const schoolController = require("../controllers/school");
+const academicController= require("../controllers/academic")
 const isAuth = require("../middleware/isAuthTeacher");
 
 const router = express.Router();
@@ -65,5 +66,10 @@ router.post(
 );
 
 router.post("/logout", isAuth, teacherController.postTeacherLogout);
+
+//teaceher's academic routers
+router.get("/academic",academicController.getTeacherView)
+router.get("/academic/classview/:id",academicController.getClassView)
+router.get("/academic/update",academicController.getupdate)
 
 module.exports = router;

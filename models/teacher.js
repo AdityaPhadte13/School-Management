@@ -84,6 +84,10 @@ module.exports = class teacher {
       [Number(Id), S, S, S, S, S, S1]
     );
   }
+  static FetchClass(Id)
+  {
+    return db.execute('SELECT classid,std,Division,name FROM `teaches` t,class_sub c,class ,subject WHERE ClassSub=ID and Class=classid and subject=subid and teacher=?',[Id]
+      )  }
   // Funtions For Insert Update And Delete records Here
 };
 

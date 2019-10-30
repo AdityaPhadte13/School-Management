@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/nav.ejs') %>
+    <h1><%= pageTitle%></h1>
+
+    <main class="container">
+
+        <table style="width:100%" class="table table-bordered table-hover table-responsive-sm">
+            <thead>
+                <tr class="bg-primary">
+                    <th>SrNo.</th>
+                    <th>Name</th>
+                    <th>Roll No.</th>
+                    <th>update</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% var i = 1; %>
+                <% for (per of per)  {%>
+                <tr class="table-primary">
+                    <td><%=i%></td>
+                    <td>
+                        <span>
+                            <a style="text-decoration: none; cursor: pointer; color: black;"
+                                href="/staff/studentData/view/<%= per.StudID %>">
+                                <%= per.Fname %>
+                                <%= per.Mname %>
+                                <%= per.Lname %>
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <a style="text-decoration: none; cursor: pointer; color: black;"
+                            href="/staff/studentData/view/<%= per.StudID %>">
+                            <%= per.RollNo %>
+                        </a>
+                    </td>
+                    <td> <a href="/teacher/academic/update">update</a> </td>
+                
+                </tr>
+                <% i++; } %>
+            </tbody>
+        </table>
+    </main>
+    <%- include('../includes/end.ejs')%>
