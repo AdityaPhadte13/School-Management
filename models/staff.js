@@ -98,40 +98,91 @@ module.exports = class staff {
   }
 
   insertStaffPhone() {
-    if (this.PhoneNo[1] !== "") {
-      return db
-        .execute("INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)", [
-          this.StaffID,
-          this.PhoneNo[0]
-        ])
-        .then(([row]) => {
-          return db.execute(
-            "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
-            [this.StaffID, this.PhoneNo[1]]
-          );
-        });
-    } else {
-      return db.execute(
-        "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
-        [this.StaffID, this.PhoneNo[0]]
-      );
-    }
+    return db
+      .execute("INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)", [
+        this.StaffID,
+        this.PhoneNo[0]
+      ])
+      .then(([row]) => {
+        return db.execute(
+          "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
+          [this.StaffID, this.PhoneNo[1]]
+        );
+      });
   }
 
   // INSERT QUERIES END
 
+  // UPDATE QUERIES START
+
+  update() {
+    return this.updateStaff().then(() => {
+      return this.updateStaffPost().then(() => {
+        return this.updateStaffLogin().then(() => {
+          return staff.UpdatePhone(
+            this.StaffID,
+            this.PhoneNo[0],
+            this.PhoneNo[1]
+          );
+        });
+      });
+    });
+  }
+
+  updateStaff() {
+    return db.execute(
+      `UPDATE staff 
+      SET Fname=?,Mname=?,Lname=?,BirthDate=?,JoinDate
+      =?,Gender=?,Qualification=?,Address=?,Salary=? WHERE StaffID= ?`,
+      [
+        this.Fname,
+        this.Mname,
+        this.Lname,
+        this.BirthDate,
+        this.JoinDate,
+        this.Gender,
+        this.Qualification,
+        this.Address,
+        this.Salary,
+        this.StaffID
+      ]
+    );
+  }
+
+  updateStaffPost() {
+    return db.execute(`UPDATE non_teaching SET Post=? WHERE StaffID= ?`, [
+      this.Post,
+      this.StaffID
+    ]);
+  }
+
+  updateStaffLogin() {
+    this.AdminPrivileges =
+      this.AdminPrivileges === "on" || this.AdminPrivileges == "1"
+        ? true
+        : false;
+    return db.execute(
+      `UPDATE non_teaching_login_info SET Email = ?, AdminPrivileges = ? WHERE StaffID = ?`,
+      [this.Email, this.AdminPrivileges, this.StaffID]
+    );
+  }
+
+  // UPDATE QUERIES END
+
   static ResetPass(id) {
-    return this.FetchByID(id).then(([staff]) => {
+    return staff.FetchByID(id).then(([staff]) => {
       if (staff.length === 0) {
         return;
       }
       const Password =
         staff[0].Fname.toLowerCase() +
         new Date(staff[0].BirthDate).getFullYear();
-      return db.execute(
-        "UPDATE `non_teaching_login_info` SET  non_teaching_login_info.Password = ? WHERE StaffID = ?",
-        [Password, id]
-      );
+      return bcrypt.hash(Password, 10).then(hash => {
+        return db.execute(
+          "UPDATE `non_teaching_login_info` SET  non_teaching_login_info.Password = ? WHERE StaffID = ?",
+          [hash, id]
+        );
+      });
     });
   }
 
@@ -141,26 +192,21 @@ module.exports = class staff {
 
   static UpdatePhone(StaffID, PhoneNo1, PhoneNo2) {
     return db
-      .execute(`DELETE FROM staff_phone_no WHERE StaffID = ?`, [StaffID])
-      .then(() => {
-        if (PhoneNo2 !== "") {
-          return db
-            .execute(
-              "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
-              [StaffID, PhoneNo1]
-            )
-            .then(([row]) => {
-              return db.execute(
-                "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
-                [StaffID, PhoneNo2]
-              );
-            });
-        } else {
-          return db.execute(
-            "INSERT INTO staff_phone_no(StaffID, PhoneNo) VALUES (?,?)",
-            [StaffID, PhoneNo1]
-          );
-        }
+      .execute(`SELECT * FROM staff_phone_no WHERE StaffID = ?`, [StaffID])
+      .then(([staff]) => {
+        console.log(staff[0].PhoneNo, PhoneNo1);
+        return db
+          .execute(
+            "UPDATE staff_phone_no SET PhoneNo = ? WHERE StaffID = ? AND PhoneNo = ?",
+            [PhoneNo1, StaffID, String(staff[0].PhoneNo)]
+          )
+          .then(([row]) => {
+            console.log(staff[1].PhoneNo, PhoneNo2);
+            return db.execute(
+              "UPDATE staff_phone_no SET PhoneNo = ? WHERE StaffID = ? AND PhoneNo = ?",
+              [PhoneNo2, StaffID, String(staff[1].PhoneNo)]
+            );
+          });
       });
   }
 

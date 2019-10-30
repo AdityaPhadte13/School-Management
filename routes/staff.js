@@ -100,6 +100,78 @@ router.get(
   staffDataController.getStaffDataEdit
 );
 
+router.post(
+  "/staffData/edit/:id",
+  [
+    body("Fname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Mname", "Name Should Conatain only Letters")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isAlpha(),
+    body("Lname", "Name Should Conatain only Letters")
+      .trim()
+      .isAlpha(),
+    body("Qualification", "Qualification Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Post", "Post Should Conatain only Letters")
+      .trim()
+      .isAlpha()
+      .customSanitizer(value => {
+        return value.toUpperCase();
+      }),
+    body("Salary", "Salary Should Contain only Numbers")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo1", "Invalid Phone Number")
+      .trim()
+      .isDecimal(),
+    body("PhoneNo2", "Invalid Phone Number")
+      .trim()
+      .optional({ checkFalsy: true })
+      .isDecimal(),
+    body("Email", "Email is Not Valid")
+      .trim()
+      .normalizeEmail()
+      .optional({ checkFalsy: true })
+      .isEmail()
+      .custom((value, { req }) => {
+        return Staff.FetchByLogin(value).then(([row]) => {
+          if (row.length > 0 && req.params.id != row[0].StaffID) {
+            return Promise.reject("Email is Already in Use");
+          }
+        });
+      }),
+    body("Address")
+      .escape()
+      .isString()
+      .isLength({ min: 6 })
+      .withMessage("Address is Too Short")
+  ],
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataEdit
+);
+
+router.post(
+  "/staffData/resetPass",
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataPass
+);
+
+router.post(
+  "/staffData/delete",
+  isAuth,
+  isAdmin,
+  staffDataController.postStaffDataDel
+);
+
 router.get(
   "/staffdata/view/:id",
   isAuth,

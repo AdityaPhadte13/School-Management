@@ -145,15 +145,16 @@ exports.postStaffDataEdit = (req, res) => {
   if (!errors.isEmpty()) {
     console.log(errors);
     return res.status(422).render("./staff/form", {
-      pageTitle: "Staff Data Add",
-      path: "/staff/staffData/add",
+      pageTitle: "Staff Data Edit",
+      path: "/staff/staffData/edit",
       staff: req.body,
       errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
     });
   }
+
   staffobj = new Staff(
-    0,
+    req.params.id,
     req.body.Fname,
     req.body.Mname,
     req.body.Lname,
@@ -171,9 +172,9 @@ exports.postStaffDataEdit = (req, res) => {
     [req.body.PhoneNo1, req.body.PhoneNo2]
   );
   staffobj
-    .save()
+    .update()
     .then(() => {
-      req.flash("user", "Data was Saved with Username: " + staffobj.Username);
+      req.flash("user", "Data was Saved");
       return req.session.save(err => {
         return res.redirect("/staff/staffData/view/" + staffobj.StaffID);
       });
@@ -182,6 +183,16 @@ exports.postStaffDataEdit = (req, res) => {
 };
 
 // Staff Data Edit Controllers End
+
+exports.postStaffDataPass = (req, res) => {
+  Staff.ResetPass(req.body.StaffID).catch(err => console.log(err));
+  return res.redirect("/staff/staffData");
+};
+
+exports.postStaffDataDel = (req, res) => {
+  Staff.Delete(req.body.StaffID).catch(err => console.log(err));
+  return res.redirect("/staff/staffData");
+};
 
 exports.getStaffDataView = (req, res) => {
   Staff.FetchByID(req.params.id)
