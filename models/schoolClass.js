@@ -32,7 +32,7 @@ module.exports = class schoolClass {
   }
 
   static FetchAllStudents(id) {
-    return db.execute("SELECT * FROM student s WHERE s.Class = ?;", [id]);
+    return db.execute('SELECT * FROM student s WHERE s.Class = ?', [id]);
   }
 
   static FetchAllSubjects(id) {

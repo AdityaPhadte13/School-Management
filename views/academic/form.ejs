@@ -1,0 +1,38 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+  <%- include('../includes/nav.ejs') %>
+  <main class="container">
+    <h1><%= pageTitle%></h1>
+    <form class="form" method="POST">
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                        <label for="FirstName">Name: </label><input type="text" id="FirstName" name="Fname" placeholder="First name"
+                        value="" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+
+                    <input type="text" id="MiddleName" name="Mname" placeholder="Middle name"
+                        value="" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="text" id="LastName" name="Lname" placeholder="Last name"
+                        value="" readonly>
+                </div>
+            </div>
+                <div class="col-md-3 mb-3">
+                    <label for="Salary">marks</label>
+                    <input type="number" min="0" step="1" class="form-control" id="Salary" name="marks"
+                        placeholder="marks" value="" required>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mb-2">ADD</button>
+            </div>
+        </form>
+  </main>
+  <%- include('../includes/end.ejs')%>

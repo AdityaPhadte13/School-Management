@@ -1,0 +1,30 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+  <%- include('../includes/nav.ejs') %>
+  <h1><%=pageTitle%></h1>
+  <main class="container pt-5">
+      <table style="width:100%" class="table table-bordered table-hover table-responsive-sm">
+        <thead>
+          <tr class="bg-primary">
+            <th>Sr. No.</th>
+            <th>std</th>
+            <th>division</th>
+            <th>subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var i = 1; %>
+          <% for (per of per)  {%>
+          <tr class="table-primary">
+            <td style="color: blue;"><%= i %></td>
+            <td><a style="text-decoration: none; cursor: pointer; color: blue;" href="academic/classview/<%=per.classid  %>"><%= per.std %></a></td>
+            <td><a style="text-decoration: none; cursor: pointer; color: blue;" href="academic/classview/<%= per.classid%>"><%= per.Division %></a></td>
+            <td><a style="text-decoration: none; cursor: pointer; color: blue;" href="academic/classview/<%= per.classid%>"><%= per.name %></a></td>
+          </tr>
+          <% i++; } %>
+        </tbody>
+      </table>
+    </main>
+  <%- include('../includes/end.ejs')%>

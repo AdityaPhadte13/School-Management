@@ -30,7 +30,7 @@
         </li>
         <% } %>
 
-        <% if ((userType === 'staff' && AdminPrivileges) || userType === 'teacher') {%>
+        <% if ((userType === 'staff' && AdminPrivileges)) {%>
         <li class="nav-item <%= path.includes('studentData') ? 'active' : '' %>">
           <a class="nav-link"
             href="<%= userType === 'teacher'? '/teacher/studentData' : '/staff/studentData'%>">Student</a>
@@ -45,7 +45,7 @@
 
         <% if (userType === 'teacher' || userType === 'student') {%>
         <li class="nav-item <%= path.includes('academic') ? 'active' : '' %>">
-          <a class="nav-link" href="">Academic</a>
+          <a class="nav-link" href="/teacher/academic">Academic</a>
         </li>
         <% } %>
 
